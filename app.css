@@ -1,0 +1,1211 @@
+/* ============================================================
+   GAMBA行政法学習システム 共通CSS
+   深紺(#1B2A4A) × 深紅(#C0392B) 江原予備校カラー
+   ============================================================ */
+
+/* ---------- リセット & ベース ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: "Meiryo", "メイリオ", "Yu Gothic", "游ゴシック", sans-serif;
+  color: #222;
+  line-height: 1.8;
+  background: #f5f2ec;
+  font-size: 15px;
+}
+img { max-width: 100%; height: auto; }
+a { color: #1B2A4A; text-decoration: underline; text-underline-offset: 3px; }
+a:hover { color: #C0392B; }
+
+/* ---------- レイアウト ---------- */
+.wrap {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px 60px;
+}
+main { padding-top: 20px; }
+
+/* ---------- トップナビ ---------- */
+.topnav {
+  background: #1B2A4A;
+  color: #fff;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 13px;
+}
+.topnav .brand { font-weight: bold; color: #f5c55b; }
+.topnav .sep { color: #6b7a95; }
+.topnav a { color: #fff; text-decoration: none; }
+.topnav a:hover { color: #f5c55b; }
+
+/* ---------- ヒーロー ---------- */
+.hero {
+  background: linear-gradient(135deg, #1B2A4A 0%, #2a3e6e 100%);
+  color: #fff;
+  padding: 36px 28px 28px;
+  border-radius: 10px;
+  margin-top: 20px;
+  box-shadow: 0 4px 16px rgba(27,42,74,0.2);
+}
+.hero .crumb {
+  font-size: 12px;
+  color: #f5c55b;
+  letter-spacing: 0.1em;
+  margin-bottom: 6px;
+}
+.hero h1 {
+  font-size: 26px;
+  margin: 0 0 8px;
+  font-weight: bold;
+  letter-spacing: 0.02em;
+}
+.hero h1 .stars {
+  display: inline-block;
+  margin-left: 10px;
+  color: #f5c55b;
+  font-size: 16px;
+}
+.hero .sub {
+  margin: 8px 0 0;
+  font-size: 14px;
+  color: #d4dae8;
+  line-height: 1.7;
+}
+
+/* ---------- ゴール(学習目標) ---------- */
+.goals {
+  background: #fff;
+  border: 1px solid #e5e0d5;
+  border-radius: 8px;
+  padding: 18px 24px;
+  margin: 18px 0;
+  border-left: 5px solid #C0392B;
+}
+.goals h2 {
+  margin: 0 0 10px;
+  color: #1B2A4A;
+  font-size: 16px;
+}
+.goals ol { margin: 0; padding-left: 24px; }
+.goals li { margin: 4px 0; }
+
+/* ---------- セクション見出し ---------- */
+.sec {
+  margin: 26px 0 12px;
+  color: #1B2A4A;
+  font-weight: bold;
+  font-size: 17px;
+  border-bottom: 2px solid #1B2A4A;
+  padding-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.sec .num {
+  background: #C0392B;
+  color: #fff;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+.subsec {
+  color: #1B2A4A;
+  margin: 18px 0 8px;
+  font-size: 15px;
+  border-left: 4px solid #C0392B;
+  padding-left: 10px;
+}
+
+/* ---------- カード ---------- */
+.card {
+  background: #fff;
+  border: 1px solid #e5e0d5;
+  border-radius: 6px;
+  padding: 18px 22px;
+  margin: 12px 0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+
+/* ---------- キーワード(用語ポップアップ) ---------- */
+.kw {
+  position: relative;
+  color: #1B2A4A;
+  font-weight: bold;
+  border-bottom: 2px dashed #1B2A4A;
+  cursor: pointer;
+  padding: 0 2px;
+}
+.kw:hover { background: #fff7ea; }
+.kw .tip {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  z-index: 100;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 280px;
+  background: #1B2A4A;
+  color: #fff;
+  text-align: left;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: normal;
+  line-height: 1.6;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  transition: opacity 0.2s;
+  border: 2px solid #C0392B;
+}
+.kw .tip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -8px;
+  border-width: 8px;
+  border-style: solid;
+  border-color: #C0392B transparent transparent transparent;
+}
+.kw:hover .tip,
+.kw:focus .tip,
+.kw.open .tip { visibility: visible; opacity: 1; }
+
+/* ---------- 強調(ピンク・深紅) ---------- */
+.pk { color: #C0392B; font-weight: bold; }
+
+/* ---------- 例え話ボックス ---------- */
+.ex-box {
+  background: #fff7ea;
+  border: 1px solid #f4c36a;
+  border-left: 5px solid #f4a62a;
+  border-radius: 4px;
+  padding: 12px 16px;
+  margin: 12px 0;
+}
+.ex-box .label {
+  display: inline-block;
+  background: #f4a62a;
+  color: #fff;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+.ex-box p { margin: 6px 0; }
+
+/* ---------- Tipボックス(緑系:重要補足) ---------- */
+.tip-box {
+  background: #e8f5ec;
+  border: 1px solid #68a97f;
+  border-left: 5px solid #2d7a4e;
+  border-radius: 4px;
+  padding: 12px 16px;
+  margin: 12px 0;
+}
+.tip-box .label {
+  display: inline-block;
+  background: #2d7a4e;
+  color: #fff;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+.tip-box p { margin: 6px 0; }
+
+/* ---------- メモボックス(暗記・ゴロ) ---------- */
+.memo-box {
+  background: #fdeff0;
+  border: 1px solid #e8a3a8;
+  border-left: 5px solid #C0392B;
+  border-radius: 4px;
+  padding: 14px 18px;
+  margin: 14px 0;
+}
+.memo-box .label {
+  display: inline-block;
+  background: #C0392B;
+  color: #fff;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+.memo-box .goro {
+  font-size: 18px;
+  font-weight: bold;
+  color: #C0392B;
+  text-align: center;
+  margin: 8px 0;
+  letter-spacing: 0.1em;
+}
+.memo-box .detail { margin: 6px 0; font-size: 14px; }
+
+/* ---------- 判例ボックス ---------- */
+.hanrei {
+  background: #fafbfd;
+  border: 2px solid #1B2A4A;
+  border-radius: 6px;
+  padding: 16px 20px;
+  margin: 16px 0;
+}
+.hanrei .htitle {
+  background: #1B2A4A;
+  color: #fff;
+  margin: -16px -20px 12px;
+  padding: 10px 20px;
+  border-radius: 4px 4px 0 0;
+  font-weight: bold;
+  font-size: 15px;
+}
+.hanrei .htitle .badge {
+  display: inline-block;
+  background: #C0392B;
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-size: 11px;
+  margin-right: 8px;
+}
+.hanrei .hrow {
+  margin: 10px 0;
+  padding-left: 80px;
+  position: relative;
+  line-height: 1.7;
+}
+.hanrei .hrow .tag {
+  position: absolute;
+  left: 0;
+  top: 2px;
+  background: #e5e0d5;
+  color: #1B2A4A;
+  padding: 2px 10px;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: bold;
+  min-width: 66px;
+  text-align: center;
+}
+.hanrei .hrow.point .tag { background: #C0392B; color: #fff; }
+
+/* ---------- テーブル ---------- */
+.tbl {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+  background: #fff;
+  font-size: 14px;
+}
+.tbl th {
+  background: #1B2A4A;
+  color: #fff;
+  padding: 10px 12px;
+  text-align: left;
+  font-weight: bold;
+  border: 1px solid #1B2A4A;
+}
+.tbl td {
+  padding: 10px 12px;
+  border: 1px solid #d6cfbe;
+  vertical-align: top;
+}
+.tbl tr:nth-child(even) td { background: #faf8f3; }
+.tbl .badge-ok {
+  background: #2d7a4e;
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: bold;
+}
+.tbl .badge-ng {
+  background: #C0392B;
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/* ---------- SVG ボックス ---------- */
+.svg-box {
+  background: #fff;
+  border: 1px solid #e5e0d5;
+  border-radius: 6px;
+  padding: 16px;
+  margin: 14px 0;
+  text-align: center;
+}
+.svg-box svg { max-width: 100%; height: auto; }
+.svg-box .caption {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #555;
+  font-weight: bold;
+}
+
+/* ---------- ボタン ---------- */
+.btn {
+  display: inline-block;
+  background: #1B2A4A;
+  color: #fff;
+  border: 2px solid #1B2A4A;
+  padding: 8px 18px;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn:hover { background: #2a3e6e; border-color: #2a3e6e; }
+.btn.outline {
+  background: #fff;
+  color: #1B2A4A;
+}
+.btn.outline:hover { background: #1B2A4A; color: #fff; }
+.btn.accent {
+  background: #C0392B;
+  border-color: #C0392B;
+}
+.btn.accent:hover { background: #a6321e; border-color: #a6321e; }
+.btn.small { padding: 4px 12px; font-size: 12px; }
+.btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* ---------- 穴埋め ---------- */
+.blank {
+  display: inline-block;
+  min-width: 80px;
+  padding: 2px 10px;
+  margin: 0 2px;
+  background: #1B2A4A;
+  color: #fff;
+  border-radius: 3px;
+  cursor: pointer;
+  font-weight: bold;
+  text-align: center;
+}
+.blank.revealed {
+  background: #fff3e0;
+  color: #C0392B;
+  border: 1px solid #C0392B;
+}
+
+/* ---------- 演習問題カード ---------- */
+.choice-q {
+  background: #fff;
+  border: 1px solid #e5e0d5;
+  border-left: 5px solid #1B2A4A;
+  border-radius: 6px;
+  padding: 16px 20px;
+  margin: 14px 0;
+}
+.choice-q.correct { border-left-color: #2d7a4e; }
+.choice-q.wrong { border-left-color: #C0392B; }
+.choice-q.hidden { display: none; }
+.choice-q .qlead {
+  font-weight: bold;
+  margin: 8px 0 12px;
+  line-height: 1.7;
+}
+.choice-q .opt {
+  display: block;
+  padding: 8px 12px;
+  margin: 4px 0;
+  border: 1px solid #d6cfbe;
+  border-radius: 4px;
+  cursor: pointer;
+  background: #fafbfd;
+  transition: background 0.15s;
+}
+.choice-q .opt:hover { background: #f0f4fa; }
+.choice-q .opt.sel { background: #fff3e0; border-color: #f4a62a; }
+.choice-q .opt.ok { background: #e8f5ec; border-color: #2d7a4e; }
+.choice-q .opt.ng { background: #fdeff0; border-color: #C0392B; }
+.choice-q .opt .label {
+  display: inline-block;
+  background: #1B2A4A;
+  color: #fff;
+  width: 22px;
+  height: 22px;
+  line-height: 22px;
+  text-align: center;
+  border-radius: 50%;
+  margin-right: 8px;
+  font-size: 12px;
+  font-weight: bold;
+}
+.choice-q .opt.ok .label { background: #2d7a4e; }
+.choice-q .opt.ng .label { background: #C0392B; }
+.choice-q .actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+.choice-q .expl {
+  display: none;
+  margin-top: 12px;
+  padding: 12px 16px;
+  background: #f5f2ec;
+  border-left: 4px solid #1B2A4A;
+  border-radius: 4px;
+  line-height: 1.75;
+}
+.choice-q.done .expl { display: block; }
+.choice-q .expl .head {
+  font-weight: bold;
+  color: #1B2A4A;
+  margin-bottom: 6px;
+}
+.choice-q .expl .correct-mark {
+  display: inline-block;
+  background: #2d7a4e;
+  color: #fff;
+  padding: 2px 10px;
+  border-radius: 3px;
+  font-size: 12px;
+  margin-right: 8px;
+}
+
+/* 問題ボタン(★・📝) */
+.qbtn {
+  background: #fff;
+  border: 1px solid #d6cfbe;
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.qbtn:hover { background: #f5f2ec; }
+.qbtn.active {
+  background: #f5c55b;
+  border-color: #f4a62a;
+}
+.qbtn.active.memo { background: #e8f5ec; border-color: #2d7a4e; }
+
+/* ---------- タブ(演習切替) ---------- */
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin: 14px 0;
+  border-bottom: 2px solid #1B2A4A;
+}
+.tabs .tab {
+  background: #e5e0d5;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 6px 6px 0 0;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 13px;
+  color: #1B2A4A;
+  font-weight: bold;
+}
+.tabs .tab.on { background: #1B2A4A; color: #fff; }
+
+/* ---------- バナー ---------- */
+.banner {
+  background: #fff4e5;
+  border-left: 4px solid #f4a62a;
+  padding: 10px 14px;
+  margin: 16px 0;
+  border-radius: 0 4px 4px 0;
+  font-size: 13px;
+  color: #7a5a0f;
+}
+
+/* ---------- メモモーダル ---------- */
+.modal-bg {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+}
+.modal-bg.show { display: flex; }
+.modal {
+  background: #fff;
+  border-radius: 8px;
+  padding: 24px;
+  max-width: 460px;
+  width: 92%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+.modal h3 {
+  margin: 0 0 12px;
+  color: #1B2A4A;
+  border-left: 5px solid #C0392B;
+  padding-left: 10px;
+}
+.modal textarea {
+  width: 100%;
+  min-height: 90px;
+  padding: 8px;
+  border: 1px solid #c8c0ae;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 14px;
+  resize: vertical;
+}
+.modal .m-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 12px; }
+
+/* ---------- ページナビ ---------- */
+.pagenav {
+  display: flex;
+  gap: 12px;
+  margin: 30px 0 10px;
+  flex-wrap: wrap;
+}
+.pagenav a {
+  flex: 1;
+  min-width: 180px;
+  background: #fff;
+  border: 1px solid #e5e0d5;
+  border-radius: 6px;
+  padding: 12px 16px;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.15s;
+}
+.pagenav a:hover {
+  border-color: #1B2A4A;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+.pagenav a.next { text-align: right; }
+.pagenav .label {
+  display: block;
+  font-size: 11px;
+  color: #C0392B;
+  font-weight: bold;
+  margin-bottom: 3px;
+}
+.pagenav .title {
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  color: #1B2A4A;
+}
+
+/* ---------- メモ・ブックマーク表示 ---------- */
+.note-display {
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: #fff7ea;
+  border-left: 3px solid #f4a62a;
+  border-radius: 0 4px 4px 0;
+  font-size: 13px;
+  color: #555;
+  font-style: italic;
+}
+
+/* ============================================================
+   穴埋めチャレンジ機能
+   ============================================================ */
+
+/* チャレンジボタン(上部固定) */
+.challenge-bar {
+  background: linear-gradient(135deg, #C0392B 0%, #e85443 100%);
+  color: #fff;
+  padding: 14px 20px;
+  border-radius: 8px;
+  margin: 16px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  box-shadow: 0 3px 10px rgba(192,57,43,0.3);
+}
+.challenge-bar .cb-title {
+  font-weight: bold;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.challenge-bar .cb-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.challenge-bar .cb-btn {
+  background: #fff;
+  color: #C0392B;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.challenge-bar .cb-btn:hover {
+  background: #fff4e5;
+  transform: translateY(-2px);
+}
+.challenge-bar .cb-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+.challenge-bar .cb-status {
+  background: rgba(255,255,255,0.2);
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+/* 穴埋め対象のインライン空欄 */
+.blank-q {
+  display: inline-block;
+  min-width: 80px;
+  padding: 2px 8px;
+  margin: 0 3px;
+  font-weight: bold;
+  color: #1B2A4A;
+}
+/* 通常状態:普通の強調と同じ見た目 */
+.blank-q.normal {
+  color: #C0392B;
+  font-weight: bold;
+}
+/* チャレンジモード・空欄 */
+.blank-q.empty {
+  background: #fff;
+  border: 2px dashed #C0392B;
+  color: transparent;
+  cursor: pointer;
+  border-radius: 4px;
+  min-height: 26px;
+  transition: all 0.15s;
+}
+.blank-q.empty:hover {
+  background: #fff7ea;
+  border-style: solid;
+}
+.blank-q.empty.focus {
+  background: #ffe58a;
+  border-color: #f4a62a;
+  border-style: solid;
+  box-shadow: 0 0 0 3px rgba(244,166,42,0.3);
+}
+/* 語句が入った状態 */
+.blank-q.filled {
+  background: #e8f2ec;
+  border: 2px solid #2d7a4e;
+  color: #1B2A4A;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.blank-q.filled:hover {
+  background: #fdeff0;
+  border-color: #C0392B;
+}
+/* 判定後:正解 */
+.blank-q.correct {
+  background: #e8f5ec;
+  border: 2px solid #2d7a4e;
+  color: #2d7a4e;
+  cursor: default;
+}
+.blank-q.correct::after {
+  content: " ✓";
+  color: #2d7a4e;
+  font-weight: bold;
+}
+/* 判定後:不正解 */
+.blank-q.incorrect {
+  background: #fdeff0;
+  border: 2px solid #C0392B;
+  color: #C0392B;
+  text-decoration: line-through;
+  cursor: default;
+}
+.blank-q.incorrect::after {
+  content: " → " attr(data-a);
+  color: #2d7a4e;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+/* 語群エリア(画面下に固定) */
+.word-bank {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #1B2A4A;
+  color: #fff;
+  padding: 14px 20px 18px;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.25);
+  z-index: 100;
+  max-height: 40vh;
+  overflow-y: auto;
+}
+.word-bank.show { display: block; }
+.word-bank .wb-title {
+  font-size: 12px;
+  color: #f5c55b;
+  margin-bottom: 10px;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+}
+.word-bank .wb-words {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.word-bank .wb-word {
+  background: #fff;
+  color: #1B2A4A;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  border: 2px solid #fff;
+  transition: all 0.15s;
+  user-select: none;
+}
+.word-bank .wb-word:hover {
+  background: #f5c55b;
+  border-color: #f5c55b;
+}
+.word-bank .wb-word.sel {
+  background: #f5c55b;
+  border-color: #C0392B;
+  transform: scale(1.1);
+  box-shadow: 0 2px 8px rgba(245,197,91,0.5);
+}
+.word-bank .wb-word.used {
+  opacity: 0.35;
+  cursor: default;
+  background: #7a8699;
+  color: #fff;
+}
+
+/* チャレンジ中の本文余白(語群分確保) */
+body.challenge-mode main {
+  padding-bottom: 220px;
+}
+
+/* 合格モーダル + 花吹雪 */
+.pass-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6);
+  z-index: 300;
+  align-items: center;
+  justify-content: center;
+}
+.pass-overlay.show { display: flex; }
+.pass-dialog {
+  background: #fff;
+  border-radius: 12px;
+  padding: 40px 50px;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+  animation: passPop 0.5s ease-out;
+  max-width: 90%;
+}
+@keyframes passPop {
+  0% { transform: scale(0.5); opacity: 0; }
+  60% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+.pass-dialog .pass-emoji {
+  font-size: 60px;
+  margin-bottom: 10px;
+}
+.pass-dialog h2 {
+  color: #C0392B;
+  font-size: 36px;
+  margin: 8px 0;
+  letter-spacing: 0.1em;
+}
+.pass-dialog p {
+  color: #1B2A4A;
+  font-size: 15px;
+  margin: 10px 0 20px;
+}
+.pass-dialog .pass-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* 花吹雪 */
+.confetti {
+  position: fixed;
+  top: -20px;
+  width: 10px;
+  height: 14px;
+  z-index: 299;
+  pointer-events: none;
+  animation: confettiFall linear forwards;
+}
+@keyframes confettiFall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0.3;
+  }
+}
+
+/* 不合格モーダル */
+.fail-toast {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #C0392B;
+  color: #fff;
+  padding: 20px 30px;
+  border-radius: 8px;
+  z-index: 300;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+.fail-toast.show {
+  display: block;
+  animation: failShake 0.5s;
+}
+@keyframes failShake {
+  0%, 100% { transform: translate(-50%, -50%); }
+  25% { transform: translate(-52%, -50%); }
+  75% { transform: translate(-48%, -50%); }
+}
+
+/* ---------- モバイル ---------- */
+@media (max-width: 640px) {
+  body { font-size: 14px; }
+  .wrap { padding: 0 14px 50px; }
+  .hero { padding: 26px 20px 22px; }
+  .hero h1 { font-size: 22px; }
+  .card { padding: 14px 16px; }
+  .hanrei .hrow { padding-left: 0; padding-top: 28px; }
+  .hanrei .hrow .tag { top: 0; left: 0; }
+  .sec { font-size: 15px; }
+  .pagenav a { min-width: 100%; }
+  .kw .tip { width: 240px; }
+}
+/* ============================================ */
+/* ミニテスト機能 (mini-test)                    */
+/* ============================================ */
+
+.mini-test {
+  margin: 16px 0 28px;
+}
+
+/* 開閉ボタン */
+.mini-test .mini-btn {
+  display: block;
+  width: 100%;
+  padding: 14px 18px;
+  background: linear-gradient(135deg, #1B2A4A 0%, #2c4173 100%);
+  color: #fff;
+  font-size: 15px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  letter-spacing: 0.05em;
+  box-shadow: 0 2px 6px rgba(27, 42, 74, 0.25);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.mini-test .mini-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(27, 42, 74, 0.35);
+}
+.mini-test .mini-btn.is-open {
+  background: linear-gradient(135deg, #444 0%, #666 100%);
+}
+.mini-test .mini-btn::after {
+  content: " ▼";
+  font-size: 12px;
+}
+.mini-test .mini-btn.is-open::after {
+  content: " ▲";
+}
+
+/* 本体(初期は非表示) */
+.mini-test .mini-body {
+  display: none;
+  margin-top: 14px;
+  padding: 18px;
+  background: #fbfcfe;
+  border: 2px solid #1B2A4A;
+  border-radius: 8px;
+}
+.mini-test.is-open .mini-body {
+  display: block;
+  animation: miniSlideDown 0.3s ease-out;
+}
+@keyframes miniSlideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* 各問 */
+.mini-q {
+  margin-bottom: 16px;
+  padding: 12px 14px;
+  background: #fff;
+  border-radius: 6px;
+  border: 1px solid #e0e4ec;
+}
+.mini-q .mini-stem {
+  font-size: 14px;
+  line-height: 1.7;
+  margin-bottom: 10px;
+  color: #1B2A4A;
+}
+
+/* ○×ボタン */
+.mini-choices {
+  display: flex;
+  gap: 10px;
+}
+.mini-c {
+  flex: 1;
+  padding: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  border: 2px solid #ccc;
+  background: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.mini-c:hover {
+  background: #f0f4fa;
+}
+.mini-c.selected {
+  background: #1B2A4A;
+  color: #fff;
+  border-color: #1B2A4A;
+}
+.mini-c[data-v="o"].selected { background: #2d7a4e; border-color: #2d7a4e; }
+.mini-c[data-v="x"].selected { background: #C0392B; border-color: #C0392B; }
+
+/* 結果表示 */
+.mini-q.is-correct {
+  background: #e8f5ec;
+  border-color: #2d7a4e;
+}
+.mini-q.is-wrong {
+  background: #fdeff0;
+  border-color: #C0392B;
+}
+.mini-q.is-correct .mini-c.selected,
+.mini-q.is-wrong .mini-c.selected {
+  pointer-events: none;
+}
+
+/* 解説(初期は非表示) */
+.mini-exp {
+  display: none;
+  margin-top: 10px;
+  padding: 10px 12px;
+  background: #fff9ed;
+  border-left: 3px solid #f4a62a;
+  border-radius: 4px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #333;
+}
+.mini-q.show-exp .mini-exp {
+  display: block;
+}
+
+/* 操作ボタン群 */
+.mini-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 14px;
+}
+.mini-judge,
+.mini-reset {
+  padding: 10px 22px;
+  font-size: 14px;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+}
+.mini-judge {
+  background: #f4a62a;
+  color: #fff;
+}
+.mini-judge:hover { background: #e09715; }
+.mini-judge:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+.mini-reset {
+  background: #fff;
+  color: #1B2A4A;
+  border: 2px solid #1B2A4A;
+}
+.mini-reset:hover { background: #f0f4fa; }
+
+/* 結果メッセージ */
+.mini-result {
+  margin-top: 14px;
+  padding: 14px;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: bold;
+  display: none;
+}
+.mini-result.show { display: block; }
+.mini-result.pass {
+  background: linear-gradient(135deg, #e8f5ec 0%, #fff9ed 100%);
+  color: #2d7a4e;
+  border: 2px solid #2d7a4e;
+}
+.mini-result.fail {
+  background: #fdeff0;
+  color: #C0392B;
+  border: 2px solid #C0392B;
+}
+.mini-result .big {
+  font-size: 22px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* ============================================ */
+/* 花吹雪アニメーション                          */
+/* ============================================ */
+.sakura-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+  display: none;
+}
+.sakura-overlay.show { display: block; }
+
+.sakura-petal {
+  position: absolute;
+  top: -30px;
+  width: 16px;
+  height: 16px;
+  background: radial-gradient(circle at 30% 30%, #ffd1dc 0%, #ff9eb5 60%, #ff7099 100%);
+  border-radius: 100% 0 100% 0;
+  opacity: 0.9;
+  animation: sakuraFall linear forwards;
+}
+.sakura-petal.alt {
+  background: radial-gradient(circle at 30% 30%, #fff5f8 0%, #ffd1dc 60%, #ffaecb 100%);
+  width: 12px;
+  height: 12px;
+}
+@keyframes sakuraFall {
+  0% {
+    transform: translateY(0) translateX(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110vh) translateX(var(--drift, 80px)) rotate(720deg);
+    opacity: 0.3;
+  }
+}
+
+/* ============================================ */
+/* ○×問題(.ox-q)— 演習問題ページ用           */
+/* ============================================ */
+.ox-q {
+  margin: 18px 0;
+  padding: 16px 18px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.ox-q .qnum {
+  display: inline-block;
+  background: #1e3a5f;
+  color: #fff;
+  padding: 3px 12px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+.ox-q .qlead {
+  margin: 8px 0 12px;
+  line-height: 1.7;
+}
+.ox-q .actions {
+  display: flex;
+  gap: 8px;
+  margin: 10px 0;
+}
+.ox-q .actions .btn {
+  min-width: 56px;
+}
+.ox-q .actions .btn.correct {
+  background: #16a34a !important;
+  color: #fff !important;
+  border-color: #16a34a !important;
+}
+.ox-q .actions .btn.wrong {
+  background: #dc2626 !important;
+  color: #fff !important;
+  border-color: #dc2626 !important;
+}
+.ox-q .expl {
+  margin-top: 12px;
+  padding: 12px 14px;
+  background: #fafafa;
+  border-left: 4px solid #1e3a5f;
+  border-radius: 6px;
+}
+.ox-q .expl .head {
+  margin-bottom: 6px;
+}
+.ox-q .expl .correct-mark {
+  color: #1e3a5f;
+  font-weight: bold;
+  font-size: 14px;
+}
+.ox-q .expl p {
+  margin: 6px 0;
+  line-height: 1.7;
+}
