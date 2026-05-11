@@ -1008,13 +1008,12 @@ body.challenge-mode main {
 .mini-c:hover {
   background: #f0f4fa;
 }
+/* 判定前: 選択中はネイビーで統一(○×どちらを選んでも同じ色) */
 .mini-c.selected {
   background: #1B2A4A;
   color: #fff;
   border-color: #1B2A4A;
 }
-.mini-c[data-v="o"].selected { background: #2d7a4e; border-color: #2d7a4e; }
-.mini-c[data-v="x"].selected { background: #C0392B; border-color: #C0392B; }
 
 /* 結果表示 */
 .mini-q.is-correct {
@@ -1025,9 +1024,30 @@ body.challenge-mode main {
   background: #fdeff0;
   border-color: #C0392B;
 }
-.mini-q.is-correct .mini-c.selected,
-.mini-q.is-wrong .mini-c.selected {
+
+/* 判定後: 選んだ選択肢が正解なら緑、不正解なら赤(正誤連動) */
+.mini-q.is-correct .mini-c.selected {
+  background: #2d7a4e;
+  border-color: #2d7a4e;
+  color: #fff;
   pointer-events: none;
+}
+.mini-q.is-wrong .mini-c.selected {
+  background: #C0392B;
+  border-color: #C0392B;
+  color: #fff;
+  pointer-events: none;
+}
+/* 判定後で間違えた場合、正解の選択肢を緑枠で表示してヒントに */
+.mini-q.is-wrong .mini-c:not(.selected) {
+  opacity: 0.7;
+}
+.mini-q[data-correct="o"].is-wrong .mini-c[data-v="o"],
+.mini-q[data-correct="x"].is-wrong .mini-c[data-v="x"] {
+  border: 2px dashed #2d7a4e;
+  background: #f0faf3;
+  color: #2d7a4e;
+  opacity: 1;
 }
 
 /* 解説(初期は非表示) */
