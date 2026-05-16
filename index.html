@@ -82,7 +82,7 @@ canvas{position:fixed;top:0;left:0;pointer-events:none;z-index:9999;display:none
     <div class="sum-item"><span class="sum-dot sum-dot-a"></span>A OK <span class="sum-count" id="cnt-a">0</span> 章</div>
     <div class="sum-item"><span class="sum-dot sum-dot-b"></span>B 要復習 <span class="sum-count" id="cnt-b">0</span> 章</div>
     <div class="sum-item"><span class="sum-dot sum-dot-c"></span>C 何度も復習 <span class="sum-count" id="cnt-c">0</span> 章</div>
-    <div class="sum-item"><span class="sum-dot sum-dot-n"></span>未実施 <span class="sum-count" id="cnt-n">15</span> 章</div>
+    <div class="sum-item"><span class="sum-dot sum-dot-n"></span>未実施 <span class="sum-count" id="cnt-n">16</span> 章</div>
   </div>
 </div>
 <div class="wrap">
@@ -244,13 +244,15 @@ canvas{position:fixed;top:0;left:0;pointer-events:none;z-index:9999;display:none
           <div class="sc-hd"><span class="sc-num">第19章</span><span class="sc-title">天皇</span><span class="sc-stars">★☆☆</span></div><div class="sc-body"><ul class="sc-topics"><li>象徴天皇制・国事行為</li><li>皇室経済</li></ul></div>
           <div class="sc-body" style="padding-top:0"><div class="sc-btn-row"><a class="sc-btn sc-btn-soon">準備中</a></div></div>
         </div>
-        <div class="sec-card coming-soon">
-          <div class="sc-hd"><span class="sc-num">第20章</span><span class="sc-title">国会(1) 地位・組織</span><span class="sc-stars">★★☆</span></div><div class="sc-body"><ul class="sc-topics"><li>国会の地位(国権の最高機関)</li><li>二院制・両院の権能</li></ul></div>
-          <div class="sc-body" style="padding-top:0"><div class="sc-btn-row"><a class="sc-btn sc-btn-soon">準備中</a></div></div>
+        <div class="sec-card" data-id="ch20">
+          <a href="kenpo_ch20.html"><div class="sc-hd"><span class="sc-num">第20章</span><span class="sc-title">国会(1) 地位・二院制・衆議院の優越</span><span class="sc-stars">★★☆</span></div><div class="sc-body"><ul class="sc-topics"><li>最高機関(政治的美称説)・唯一の立法機関</li><li>二院制・衆参両院の差異</li><li>衆議院の優越(4種・両院協議会)</li></ul></div></a>
+          <div class="sc-body" style="padding-top:0"><div class="sc-btn-row"><a class="sc-btn sc-btn-learn" href="kenpo_ch20.html">解説<span class="sc-mini-badge">ミニテスト</span></a><a class="sc-btn sc-btn-practice" href="kenpo_ch20_q.html">演習</a></div></div>
+          <div class="abc-row"><button class="abc-btn abc-btn-a" onclick="setABC('ch20','a',this)">A OK</button><button class="abc-btn abc-btn-b" onclick="setABC('ch20','b',this)">B 要復習</button><button class="abc-btn abc-btn-c" onclick="setABC('ch20','c',this)">C 何度も</button></div>
         </div>
-        <div class="sec-card coming-soon">
-          <div class="sc-hd"><span class="sc-num">第21章</span><span class="sc-title">国会(2) 議員の地位・運営</span><span class="sc-stars">★★☆</span></div><div class="sc-body"><ul class="sc-topics"><li>議員の地位・特権(不逮捕・免責)</li><li>会期・定足数・表決</li></ul></div>
-          <div class="sc-body" style="padding-top:0"><div class="sc-btn-row"><a class="sc-btn sc-btn-soon">準備中</a></div></div>
+        <div class="sec-card" data-id="ch21">
+          <a href="kenpo_ch21.html"><div class="sc-hd"><span class="sc-num">第21章</span><span class="sc-title">国会(2) 議員の特権・会期・国政調査権</span><span class="sc-stars">★★☆</span></div><div class="sc-body"><ul class="sc-topics"><li>不逮捕特権・免責特権・歳費受領権</li><li>会期制(常会・臨時会・特別会・緊急集会)</li><li>会議の原則・議院自律権・国政調査権</li></ul></div></a>
+          <div class="sc-body" style="padding-top:0"><div class="sc-btn-row"><a class="sc-btn sc-btn-learn" href="kenpo_ch21.html">解説<span class="sc-mini-badge">ミニテスト</span></a><a class="sc-btn sc-btn-practice" href="kenpo_ch21_q.html">演習</a></div></div>
+          <div class="abc-row"><button class="abc-btn abc-btn-a" onclick="setABC('ch21','a',this)">A OK</button><button class="abc-btn abc-btn-b" onclick="setABC('ch21','b',this)">B 要復習</button><button class="abc-btn abc-btn-c" onclick="setABC('ch21','c',this)">C 何度も</button></div>
         </div>
         <div class="sec-card coming-soon">
           <div class="sc-hd"><span class="sc-num">第22章</span><span class="sc-title">国会(3) 権能</span><span class="sc-stars">★★☆</span></div><div class="sc-body"><ul class="sc-topics"><li>立法権・条約承認権</li><li>国政調査権・弾劾裁判所</li></ul></div>
@@ -289,7 +291,7 @@ canvas{position:fixed;top:0;left:0;pointer-events:none;z-index:9999;display:none
 <script>
 var STORAGE_KEY = 'gamba_kenpo_status';
 var status = {};
-var activeIds = ['ch01','ch02','ch03','ch04','ch05','ch06','ch07','ch08','ch09','ch10','ch11','ch12','ch13','ch14','ch15'];
+var activeIds = ['ch01','ch02','ch03','ch04','ch05','ch06','ch07','ch08','ch09','ch10','ch11','ch12','ch13','ch14','ch15','ch20','ch21'];
 // 完成済みの章のみカウント対象。完成次第 activeIds に追加。
 
 // localStorage から復元

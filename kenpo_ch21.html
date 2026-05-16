@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GAMBA憲法 第21章 国会②</title>
+<style>
+  :root {
+    --navy: #1B2A4A;
+    --crimson: #C0392B;
+    --gold: #D4A017;
+    --light-bg: #F4F6F9;
+    --white: #FFFFFF;
+    --text: #2C3E50;
+    --border: #DDE3ED;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Meiryo', 'メイリオ', 'MS PGothic', sans-serif;
+    background: var(--light-bg);
+    color: var(--text);
+    line-height: 1.8;
+  }
+  .header {
+    background: var(--navy);
+    color: var(--white);
+    padding: 24px 20px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    background: rgba(192,57,43,0.15);
+    border-radius: 50%;
+  }
+  .chapter-label { font-size: 13px; letter-spacing: 3px; color: #8FA8CC; margin-bottom: 6px; }
+  .chapter-title { font-size: 26px; font-weight: bold; letter-spacing: 2px; margin-bottom: 8px; }
+  .chapter-title span { color: var(--crimson); }
+  .chapter-sub { font-size: 13px; color: #8FA8CC; letter-spacing: 1px; }
+  .progress-bar {
+    background: #2D3F60;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    color: #8FA8CC;
+  }
+  .progress-track { flex: 1; height: 4px; background: #3D5070; border-radius: 2px; }
+  .progress-fill { height: 100%; width: 75%; background: var(--crimson); border-radius: 2px; }
+  .container { max-width: 800px; margin: 0 auto; padding: 20px 16px 60px; }
+
+  .section { background: var(--white); border-radius: 10px; margin-bottom: 20px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .section-header {
+    background: var(--navy);
+    color: var(--white);
+    padding: 12px 18px;
+    font-size: 15px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-header .num {
+    background: var(--crimson);
+    color: white;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: bold; flex-shrink: 0;
+  }
+  .section-body { padding: 18px; }
+
+  .article-box {
+    background: #EEF2F8;
+    border-left: 4px solid var(--navy);
+    border-radius: 0 6px 6px 0;
+    padding: 12px 15px;
+    margin-bottom: 16px;
+    font-size: 14px;
+  }
+  .article-box .art-num { font-weight: bold; color: var(--navy); font-size: 13px; margin-bottom: 4px; }
+
+  .point-card { border: 2px solid var(--border); border-radius: 8px; margin-bottom: 14px; overflow: hidden; }
+  .point-card-title { background: #EEF2F8; padding: 8px 14px; font-size: 13px; font-weight: bold; color: var(--navy); border-bottom: 1px solid var(--border); }
+  .point-card-body { padding: 12px 14px; font-size: 14px; }
+
+  .kw { color: var(--crimson); font-weight: bold; }
+  .kw-blue { color: var(--navy); font-weight: bold; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 12px 0; }
+  th { background: var(--navy); color: white; padding: 8px 10px; text-align: center; font-weight: bold; }
+  td { padding: 8px 10px; border: 1px solid var(--border); vertical-align: top; line-height: 1.6; }
+  tr:nth-child(even) td { background: #F8FAFC; }
+  .td-label { background: #EEF2F8; font-weight: bold; color: var(--navy); text-align: center; white-space: nowrap; }
+
+  .goryo {
+    background: #FFF8E6;
+    border: 2px solid var(--gold);
+    border-radius: 8px;
+    padding: 12px 15px;
+    margin: 12px 0;
+    font-size: 14px;
+  }
+  .goryo-title { font-size: 12px; color: var(--gold); font-weight: bold; margin-bottom: 6px; letter-spacing: 1px; }
+  .goryo-main { font-size: 17px; font-weight: bold; color: #7D5A00; letter-spacing: 1px; margin-bottom: 4px; }
+  .goryo-sub { font-size: 12px; color: #8B6914; }
+
+  .caution {
+    background: #FFF0EE;
+    border-left: 4px solid var(--crimson);
+    border-radius: 0 6px 6px 0;
+    padding: 10px 14px;
+    margin: 10px 0;
+    font-size: 13px;
+  }
+  .caution-title { font-weight: bold; color: var(--crimson); margin-bottom: 4px; }
+
+  .info {
+    background: #EEF2F8;
+    border-left: 4px solid var(--navy);
+    border-radius: 0 6px 6px 0;
+    padding: 10px 14px;
+    margin: 10px 0;
+    font-size: 13px;
+  }
+
+  .summary-box {
+    background: var(--navy);
+    color: white;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  .summary-box ul { padding-left: 18px; line-height: 2; }
+  .summary-box li::marker { color: var(--crimson); }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 12px 0; }
+  @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+  .col-box { background: #F0F4FA; border-radius: 8px; padding: 12px 14px; font-size: 13px; }
+  .col-box-title { font-weight: bold; color: var(--navy); margin-bottom: 6px; font-size: 13px; border-bottom: 2px solid var(--crimson); padding-bottom: 4px; }
+
+
+  /* ミニテスト */
+  .mini-test {
+    background: #F0F4FA;
+    border: 2px solid var(--navy);
+    border-radius: 10px;
+    margin-top: 18px;
+    overflow: hidden;
+  }
+  .mini-test-header {
+    background: var(--navy);
+    color: white;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .mini-test-body { padding: 14px; }
+  .mq { margin-bottom: 14px; font-size: 14px; }
+  .mq-text { margin-bottom: 8px; line-height: 1.9; }
+  .mq-num { font-weight: bold; color: var(--navy); margin-right: 4px; }
+  .mb {
+    display: inline-block;
+    min-width: 70px;
+    border-bottom: 2px solid var(--navy);
+    color: transparent;
+    background: #DDE3ED;
+    border-radius: 3px;
+    padding: 1px 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: bold;
+    font-size: 14px;
+    vertical-align: middle;
+    user-select: none;
+  }
+  .mb.open {
+    color: var(--crimson);
+    background: #FFF0EE;
+    border-bottom-color: var(--crimson);
+  }
+  .mini-reveal-btn {
+    display: inline-block;
+    background: var(--navy);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 16px;
+    font-size: 12px;
+    cursor: pointer;
+    font-family: inherit;
+    margin-top: 4px;
+  }
+  .mini-reveal-btn:hover { background: #2D4070; }
+  .footer { background: var(--navy); color: #8FA8CC; text-align: center; padding: 16px; font-size: 12px; margin-top: 30px; }
+
+  .badge-ok { display: inline-block; background: #E8F8F0; color: #27AE60; border: 1px solid #A8DFC4; border-radius: 6px; padding: 1px 8px; font-size: 11px; font-weight: bold; }
+  .badge-ng { display: inline-block; background: #FFF0EE; color: var(--crimson); border: 1px solid #F5C6BF; border-radius: 6px; padding: 1px 8px; font-size: 11px; font-weight: bold; }
+  .badge-req { display: inline-block; background: #FFF8E6; color: #8B6914; border: 1px solid #F0D080; border-radius: 6px; padding: 1px 8px; font-size: 11px; font-weight: bold; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="chapter-label">GAMBA 憲法 ▶ 第21章</div>
+  <div class="chapter-title">国会 <span>②</span></div>
+  <div class="chapter-sub">議員の特権・会期制・会議の原則・国政調査権</div>
+</div>
+
+<div class="progress-bar">
+  <span>21/28</span>
+  <div class="progress-track"><div class="progress-fill"></div></div>
+  <span>75%</span>
+</div>
+
+<div class="container">
+
+  <!-- セクション1: 国会議員の特権 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="num">1</div>
+      国会議員の特権
+    </div>
+    <div class="section-body">
+
+      <p style="font-size:14px; margin-bottom:14px">国会議員には自由に職務を遂行できるよう、憲法上3つの特権が保障されています。</p>
+
+      <!-- 不逮捕特権 -->
+      <div class="point-card">
+        <div class="point-card-title">① 不逮捕特権（50条）</div>
+        <div class="point-card-body">
+          <div class="article-box" style="margin-bottom:10px">
+            <div class="art-num">憲法50条</div>
+            両議院の議員は、法律の定める場合を除いては、国会の<strong>会期中</strong>逮捕されず、会期前に逮捕された議員は、その<strong>議院の要求</strong>があれば、会期中これを釈放しなければならない。
+          </div>
+
+          <table>
+            <tr>
+              <th>文言</th>
+              <th>意味・解釈</th>
+              <th>注意点</th>
+            </tr>
+            <tr>
+              <td class="td-label">「法律の定める場合」</td>
+              <td>①<span class="kw">院外における現行犯</span><br>②<span class="kw">議院の許諾</span>がある場合（国会法33条）</td>
+              <td>院内における現行犯は含まない</td>
+            </tr>
+            <tr>
+              <td class="td-label">「会期中」</td>
+              <td>国会の会期中のみ</td>
+              <td><span class="kw">参議院の緊急集会中も適用</span>（国会法100条1項）<br>閉会中の継続審議委員会には及ばない</td>
+            </tr>
+            <tr>
+              <td class="td-label">「逮捕」</td>
+              <td>刑事訴訟法上の逮捕だけでなく<span class="kw">広く身柄拘束一般</span>（勾引・勾留・保護拘束・行政的拘束も含む）</td>
+              <td>訴追されない特権ではない</td>
+            </tr>
+          </table>
+
+          <div class="caution">
+            <div class="caution-title">⚠ 釈放要求権</div>
+            会期前に逮捕された議員は、議院の要求があれば<span class="kw">会期中に釈放</span>しなければならない（議院の釈放要求権）。<br>
+            ただし、要求があれば「必ず」釈放される（国会開会日に自動釈放されるわけではない）。
+          </div>
+        </div>
+      </div>
+
+      <!-- 免責特権 -->
+      <div class="point-card">
+        <div class="point-card-title">② 免責特権（51条）</div>
+        <div class="point-card-body">
+          <div class="article-box" style="margin-bottom:10px">
+            <div class="art-num">憲法51条</div>
+            両議院の議員は、<strong>議院で行つた</strong>演説、討論又は表決について、<strong>院外で責任を問はれない</strong>。
+          </div>
+
+          <table>
+            <tr>
+              <th>文言</th>
+              <th>意味・解釈</th>
+              <th>注意点</th>
+            </tr>
+            <tr>
+              <td class="td-label">「議院で行った」</td>
+              <td>議院の活動として職務上行ったもの。<span class="kw">場所的意味ではなく活動的意味</span></td>
+              <td>地方公聴会・閉会中の継続審議・<span class="kw">参議院緊急集会での発言</span>にも及ぶ</td>
+            </tr>
+            <tr>
+              <td class="td-label">「演説、討論又は表決」</td>
+              <td>例示列挙。<span class="kw">職務遂行に付随する行為</span>も含む</td>
+              <td>野次・私語・<span class="kw">暴力行為</span>は含まない</td>
+            </tr>
+            <tr>
+              <td class="td-label">「責任」</td>
+              <td><span class="kw">法的責任</span>（民事・刑事・公務員の懲戒責任）が免除される</td>
+              <td><span class="kw">政治責任は免除されない</span><br>政党からの除名も許される</td>
+            </tr>
+          </table>
+
+          <div class="caution">
+            <div class="caution-title">⚠ 国務大臣としての発言は免責されない</div>
+            国会議員が<span class="kw">国務大臣の立場</span>で行った発言には免責特権は及ばない。議員としての活動のみが対象。
+          </div>
+
+          <div class="caution">
+            <div class="caution-title">⚠ 地方議会議員には適用なし（判例）</div>
+            地方議会議員の発言については、憲法上の免責特権の保障はないとするのが判例（最大判昭42・5・24）。
+          </div>
+
+          <div class="info">
+            <strong>📋 国会議員は999事件（最判平9・9・9）</strong><br>
+            国会議員の質疑等によって個別の国民の権利が侵害されても、<span class="kw">直ちに国の損害賠償責任は生じない</span>。国の賠償責任が肯定されるには、議員が職務とかかわりなく<span class="kw">違法または不当な目的をもって事実を摘示</span>するなど、<span class="kw">特別の事情</span>が必要。
+          </div>
+        </div>
+      </div>
+
+      <!-- 歳費受領権 -->
+      <div class="point-card">
+        <div class="point-card-title">③ 歳費受領権（49条）</div>
+        <div class="point-card-body">
+          国会議員は、法律の定めるところにより、国庫から相当額の歳費を受ける（49条）。<br><br>
+          歳費の具体的内容は<span class="kw">法律事項</span>であるため、法律を改正することで減額できる。<br>
+          ※ 裁判官の報酬は憲法上減額不可（79条6項・80条2項）と異なる点に注意。
+        </div>
+      </div>
+
+
+      <!-- ミニテスト1 -->
+      <div class="mini-test">
+        <div class="mini-test-header">✏️ ミニテスト — 国会議員の特権</div>
+        <div class="mini-test-body">
+          <div class="mq">
+            <div class="mq-text"><span class="mq-num">1.</span>不逮捕特権の例外（法律の定める場合）は①<span class="mb" onclick="this.classList.toggle('open')" data-ans="院外の現行犯">　　　　　</span>と②<span class="mb" onclick="this.classList.toggle('open')" data-ans="議院の許諾">　　　　</span>の2つ。</div>
+          </div>
+          <div class="mq">
+            <div class="mq-text"><span class="mq-num">2.</span>「逮捕」とは刑事訴訟法上の逮捕だけでなく、広く<span class="mb" onclick="this.classList.toggle('open')" data-ans="身柄拘束一般">　　　　　</span>を指す。</div>
+          </div>
+          <div class="mq">
+            <div class="mq-text"><span class="mq-num">3.</span>免責特権で免除される「責任」は<span class="mb" onclick="this.classList.toggle('open')" data-ans="法的責任">　　　　</span>（民事・刑事・懲戒）のみ。政党からの除名は<span class="mb" onclick="this.classList.toggle('open')" data-ans="許される">　　　</span>。</div>
+          </div>
+          <div class="mq">
+            <div class="mq-text"><span class="mq-num">4.</span>国務大臣の立場での発言には免責特権は<span class="mb" onclick="this.classList.toggle('open')" data-ans="及ばない">　　　</span>（通説）。</div>
+          </div>
+          <div class="mq">
+            <div class="mq-text"><span class="mq-num">5.</span>歳費の中身は<span class="mb" onclick="this.classList.toggle('open')" data-ans="法律事項">　　　</span>であるため、法律改正によって<span class="mb" onclick="this.classList.toggle('open')" data-ans="減額できる">　　　　</span>。</div>
+          </div>
+          <button class="mini-reveal-btn" onclick="(function(btn){btn.closest('.mini-test').querySelectorAll('.mb').forEach(function(b){b.classList.add('open')});btn.style.display='none'})(this)">全て表示</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- セクション2: 会期制 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="num">2</div>
+      会期制
+    </div>
+    <div class="section-body">
+
+      <p style="font-size:14px; margin-bottom:12px">国会は<span class="kw">会期中のみ活動</span>する。会期には常会・臨時会・特別会の3種類がある。</p>
+
+      <table>
+        <tr>
+          <th style="width:12%">種類</th>
+          <th style="width:22%">召集</th>
+          <th style="width:20%">会期</th>
+          <th style="width:20%">延長</th>
+          <th style="width:26%">備考</th>
+        </tr>
+        <tr>
+          <td class="td-label">常会<br>（52条）</td>
+          <td>毎年1回、<span class="kw">1月中</span>に召集（国会法2条）</td>
+          <td><span class="kw">150日間</span>（国会法10条）</td>
+          <td><span class="kw">1回</span>に限り延長可（国会法12条2項）</td>
+          <td>衆議院優越あり</td>
+        </tr>
+        <tr>
+          <td class="td-label">臨時会<br>（53条）</td>
+          <td>①内閣が必要とするとき<br>②いずれかの議院の<span class="kw">総議員の4分の1以上</span>の要求があるとき（義務的召集）<br>③衆院議員の任期満了による総選挙後<br>④参院議員の通常選挙後</td>
+          <td>両議院一致の議決で決定（国会法11条）</td>
+          <td><span class="kw">2回</span>まで延長可（国会法12条2項）</td>
+          <td>衆議院優越あり</td>
+        </tr>
+        <tr>
+          <td class="td-label">特別会<br>（54条1項）</td>
+          <td>衆議院の解散による総選挙の日から<span class="kw">30日以内</span>に召集。常会召集時期と重なれば<span class="kw">合わせて召集</span>可</td>
+          <td>両議院一致の議決で決定</td>
+          <td><span class="kw">2回</span>まで延長可</td>
+          <td>内閣総理大臣の指名が最優先</td>
+        </tr>
+      </table>
+
+      <div class="caution">
+        <div class="caution-title">⚠ 特別会の流れ（超頻出！）</div>
+        衆議院の解散の日から<span class="kw">40日以内</span>に総選挙→総選挙の日から<span class="kw">30日以内</span>に特別会召集（54条1項）<br>
+        ※解散→40日以内→総選挙→30日以内→特別会
+      </div>
+
+      <div class="goryo">
+        <div class="goryo-title">🎵 語呂合わせ：特別会までの日数</div>
+        <div class="goryo-main">「解散→ヨ（40日）・サ（30日）→特別会」</div>
+        <div class="goryo-sub">解散から40日以内に総選挙、選挙から30日以内に特別会</div>
+      </div>
+
+      <!-- 参議院の緊急集会 -->
+      <div class="point-card" style="margin-top:16px">
+        <div class="point-card-title">参議院の緊急集会（54条2項）</div>
+        <div class="point-card-body">
+          <p style="margin-bottom:10px">衆議院が解散されてから特別会が召集されるまでの間（最大70日間）に<span class="kw">国に緊急の必要がある</span>とき、<span class="kw">内閣だけ</span>が参議院の緊急集会を求めることができる。</p>
+
+          <table>
+            <tr><th>項目</th><th>内容</th></tr>
+            <tr><td class="td-label">請求できる主体</td><td><span class="kw">内閣のみ</span>（参議院議員は請求できない）</td></tr>
+            <tr><td class="td-label">天皇による召集</td><td><span class="kw">不要</span>（国会とは異なる制度のため）</td></tr>
+            <tr><td class="td-label">議員の特権</td><td><span class="kw">不逮捕特権・免責特権あり</span>（国会を代行する制度のため）</td></tr>
+            <tr><td class="td-label">議決できる事項</td><td>国に緊急の必要がある事項<br><span class="kw">憲法改正の発議・内閣総理大臣の指名はできない</span></td></tr>
+            <tr><td class="td-label">効力</td><td>暫定的効力のみ。次の国会開会後<span class="kw">10日以内</span>に衆議院の同意がなければ<span class="kw">将来に向かって効力を失う</span>（遡及せず）</td></tr>
+          </table>
+
+          <div class="caution">
+            <div class="caution-title">⚠ 緊急集会でできないこと</div>
+            憲法改正の発議（両院の議決が必要）・内閣不信任決議（衆議院の権能）・内閣総理大臣の指名（67条）はできない。<span class="kw">予算</span>については審議・議決できる（次年度活動に必要なため）。
+          </div>
+        </div>
+      </div>
+
+      <!-- 会期の原則 -->
+      <div class="point-card">
+        <div class="point-card-title">会期の2大原則</div>
+        <div class="point-card-body">
+          <div class="two-col">
+            <div class="col-box">
+              <div class="col-box-title">会期不継続の原則</div>
+              前の会期中に議決に至らなかった案件は後の会期に継続しない（国会法68条）。<br>
+              <span class="kw">例外</span>：委員会（常任・特別）の継続審議案件（国会法68条ただし書）
+            </div>
+            <div class="col-box">
+              <div class="col-box-title">一事不再議の原則</div>
+              同一会期中に一度議決した案件は再び審議しない（慣行）。<br>
+              <span class="kw">例外</span>：衆議院による法律案の再可決（59条2項）
+            </div>
+          </div>
+          <div class="info" style="margin-top:8px">「会期不継続の原則」は<span class="kw">憲法に明文なし</span>（国会法68条に明記）。「一事不再議の原則」も憲法・国会法に明文なし（慣行）。</div>
+        </div>
+      </div>
+
+
+      <!-- ミニテスト2 -->
+      <div class="mini-test">
+        <div class="mini-test-header">✏️ ミニテスト — 会期制</div>
+        <div class="mini-test-body">
+          <div class="mq">
+            <div class="mq-text"><span class="mq-num">1.</span>常会の会期は<span class="mb" onclick="this.classList.toggle('open')" data-ans="150日">　　</span>。延長は<span class="mb" onclick="this.classList.toggle('open')" data-ans="1回">　</span>に限り可能。</div>
+          </div>
+          <div class="mq">
+            <div class="mq-text"><span class="mq-num">2.</span>臨時会・特別会の会期延長は<span class="mb" onclick="this.classList.toggle('open')" data-ans="2回">　</span>まで可能。</div>
+          </div>
+          <div class="mq">
+            <div class="mq-text"><span class="mq-num">3.</span>特別会：解散の日から<span class="mb" onclick="this.classList.toggle('open')" data-ans="40日">　　</span>以内に総選挙→選挙の日から<span class="mb" onclick="this.classList.toggle('open')" data-ans="30日">　　</span>以内に召集。</div>
+          </div>
+          <div class="mq">
+            <div class="mq-text"><span class="mq-num">4.</span>緊急集会を求めることができるのは<span class="mb" onclick="this.classList.toggle('open')" data-ans="内閣のみ">　　　　</span>。天皇による召集は<span class="mb" onclick="this.classList.toggle('open')" data-ans="不要">　　</span>。</div>
+          </div>
+          <div class="mq">
+            <div class="mq-text"><span class="mq-num">5.</span>緊急集会の措置は次の国会開会後<span class="mb" onclick="this.classList.toggle('open')" data-ans="10日">　　</span>以内に衆議院の同意がなければ<span class="mb" onclick="this.classList.toggle('open')" data-ans="将来に向かって">　　　　　</span>効力を失う。</div>
+          </div>
+          <button class="mini-reveal-btn" onclick="(function(btn){btn.closest('.mini-test').querySelectorAll('.mb').forEach(function(b){b.classList.add('open')});btn.style.display='none'})(this)">全て表示</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- セクション3: 会議の原則 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="num">3</div>
+      会議の原則（定足数・表決数・公開原則）
+    </div>
+    <div class="section-body">
+
+      <div class="point-card">
+        <div class="point-card-title">定足数と表決数</div>
+        <div class="point-card-body">
+          <table>
+            <tr>
+              <th>区分</th>
+              <th>要件</th>
+              <th>根拠</th>
+            </tr>
+            <tr>
+              <td class="td-label">定足数（議事開催の最低人数）</td>
+              <td><span class="kw">総議員の3分の1以上</span>の出席</td>
+              <td>56条1項</td>
+            </tr>
+            <tr>
+              <td class="td-label">表決数（原則）</td>
+              <td><span class="kw">出席議員の過半数</span>（可否同数のとき議長が決定）</td>
+              <td>56条2項</td>
+            </tr>
+            <tr>
+              <td class="td-label">出席議員の<span class="kw">3分の2以上</span>が必要な場合</td>
+              <td>①議員の資格争訟裁判で議席を失わせる場合（55条）<br>②秘密会の開催（57条1項ただし書）<br>③懲罰による議員の<span class="kw">除名</span>（58条2項ただし書）<br>④法律案の衆議院の再可決（59条2項）</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td class="td-label">各議院の<span class="kw">総議員の3分の2以上</span>が必要な場合</td>
+              <td>憲法改正の発議（96条1項）</td>
+              <td></td>
+            </tr>
+          </table>
+          <div class="goryo">
+            <div class="goryo-title">🎵 語呂合わせ：出席議員3/2以上の4場面</div>
+            <div class="goryo-main">「資格・秘密・除名・再可決」</div>
+            <div class="goryo-sub">資格争訟で除籍 / 秘密会 / 懲罰で除名 / 法律案の再可決 → 全て出席3/2以上</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="point-card">
+        <div class="point-card-title">会議公開の原則（57条）</div>
+        <div class="point-card-body">
+          本会議は<span class="kw">原則公開</span>。ただし出席議員の3分の2以上の多数で議決した場合は<span class="kw">秘密会</span>を開くことができる。<br><br>
+          <span class="kw">委員会は非公開が原則</span>（ただし報道関係者等は委員長の許可で傍聴可）。<br><br>
+          会議録については、秘密会の記録のうち特に秘密を要すると認められるもの以外は、<span class="kw">公表・一般頒布</span>しなければならない（57条2項）。<br>
+          また、<span class="kw">出席議員の5分の1以上</span>の要求があれば各議員の表決を会議録に記載しなければならない（57条3項）。
+        </div>
+      </div>
+
+
+      <!-- ミニテスト3 -->
+      <div class="mini-test">
+        <div class="mini-test-header">✏️ ミニテスト — 会議の原則</div>
+        <div class="mini-test-body">
+          <div class="mq">
+            <div class="mq-text"><span class="mq-num">1.</span>定足数：<span class="mb" onclick="this.classList.toggle('open')" data-ans="総議員の3分の1">　　　　　</span>以上の出席。</div>
+          </div>
+          <div class="mq">
+            <div class="mq-text"><span class="mq-num">2.</span>表決数の原則：<span class="mb" onclick="this.classList.toggle('open')" data-ans="出席議員の過半数">　　　　　　</span>。</div>
+          </div>
+          <div class="mq">
+            <div class="mq-text"><span class="mq-num">3.</span>出席議員の3/2以上が必要な場面4つ：資格争訟で<span class="mb" onclick="this.classList.toggle('open')" data-ans="議席を失わせる">　　　　　</span>場合・<span class="mb" onclick="this.classList.toggle('open')" data-ans="秘密会">　　　</span>・<span class="mb" onclick="this.classList.toggle('open')" data-ans="除名">　　</span>・法律案の<span class="mb" onclick="this.classList.toggle('open')" data-ans="再可決">　　　</span>。</div>
+          </div>
+          <div class="mq">
+            <div class="mq-text"><span class="mq-num">4.</span>本会議は原則<span class="mb" onclick="this.classList.toggle('open')" data-ans="公開">　　</span>。委員会は<span class="mb" onclick="this.classList.toggle('open')" data-ans="非公開">　　　</span>が原則。</div>
+          </div>
+          <button class="mini-reveal-btn" onclick="(function(btn){btn.closest('.mini-test').querySelectorAll('.mb').forEach(function(b){b.classList.add('open')});btn.style.display='none'})(this)">全て表示</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- セクション4: 議院の権能 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="num">4</div>
+      議院の権能（自律権・国政調査権）
+    </div>
+    <div class="section-body">
+
+      <div class="point-card">
+        <div class="point-card-title">議院自律権</div>
+        <div class="point-card-body">
+          <p style="margin-bottom:10px">各議院が他の国家機関から干渉を受けることなく、内部組織・運営を自主的に決定できる権能。</p>
+          <div class="two-col">
+            <div class="col-box">
+              <div class="col-box-title">内部組織に関する自律権</div>
+              ・役員選任権（58条1項）<br>
+              ・議員の資格争訟裁判権（55条）<br>
+              ・議員の不逮捕許諾権・釈放要求権（50条）
+            </div>
+            <div class="col-box">
+              <div class="col-box-title">運営に関する自律権</div>
+              ・議院規則制定権（58条2項前段）<br>
+              ・議員懲罰権（58条2項後段）<br>
+              　除名：<span class="kw">出席3/2以上</span>の議決が必要
+            </div>
+          </div>
+          <div class="caution" style="margin-top:10px">
+            <div class="caution-title">⚠ 議院の自律権と司法審査</div>
+            判例（最大判昭37・3・7、警察法改正無効事件）は、国会内部の議事手続については<span class="kw">裁判所は審査できない</span>としている。また、資格争訟裁判・懲罰裁判の結果に不服があっても<span class="kw">司法裁判所に出訴できない</span>（司法権の限界）。
+          </div>
+          <div class="caution">
+            <div class="caution-title">⚠ 議員の懲罰事由</div>
+            懲罰は<span class="kw">院内の秩序を乱した</span>議員に対して行使できる。<span class="kw">議場外の行為で会議の運営と関係のない個人的行為</span>は懲罰の対象とならない。
+          </div>
+        </div>
+      </div>
+
+      <div class="point-card">
+        <div class="point-card-title">国政調査権（62条）</div>
+        <div class="point-card-body">
+          <div class="article-box" style="margin-bottom:10px">
+            <div class="art-num">憲法62条</div>
+            両議院は、各々国政に関する調査を行ひ、これに関して、<strong>証人の出頭及び証言並びに記録の提出</strong>を要求することができる。
+          </div>
+
+          <div class="two-col" style="margin-bottom:12px">
+            <div class="col-box">
+              <div class="col-box-title">補助的権能説（通説）</div>
+              国政調査権は、議院が有する立法権・予算審議権等を<span class="kw">有効適切に行使するための補助的手段</span>として認められた権能。<br>
+              ∴ 「最高機関」は政治的美称 → 補助的権能説と整合
+            </div>
+            <div class="col-box">
+              <div class="col-box-title">独立権能説（少数説）</div>
+              国会は国権の最高機関（統括機関説）として、国政全般を統括するための<span class="kw">独立した権能</span>。<br>
+              ∴ 「最高機関」＝統括機関説 → 独立権能説と整合
+            </div>
+          </div>
+
+          <p style="font-size:14px; margin-bottom:10px">国政調査権の<span class="kw">主体は各議院</span>（議院の権能）。通常、常任委員会・特別委員会に付託して行使する。委員会も調査権を行使できる。要求できるのは「<span class="kw">証人の出頭・証言・記録の提出</span>」の3つのみ。<span class="kw">搜索・押収・逮捕などの強制手段は認められない</span>。</p>
+
+          <p style="font-size:14px; font-weight:bold; margin-bottom:6px; color:var(--navy)">国政調査権の限界（3つの視点）</p>
+          <table>
+            <tr><th>関係</th><th>限界の内容</th></tr>
+            <tr>
+              <td class="td-label">司法権との関係</td>
+              <td>
+                <span class="badge-ng">原則禁止</span> 現に裁判が進行中の事件について、裁判官の訴訟指揮の当否・裁判内容の当否を調査することはできない（判決確定後も同様）<br>
+                <span class="badge-ok">許容</span> 裁判所とは<span class="kw">異なる目的</span>（立法目的・行政監督目的）で行う<span class="kw">並行調査</span>は許される（ロッキード事件）
+              </td>
+            </tr>
+            <tr>
+              <td class="td-label">行政権との関係</td>
+              <td>
+                議院内閣制の趣旨から行政全般を広く調査できる<br>
+                <span class="badge-ng">例外</span> 公務員の<span class="kw">職務上の秘密</span>に関する事項（議院証言法5条）<br>
+                <span class="badge-req">慎重</span> 検察権は準司法的性格があり、<span class="kw">起訴・不起訴の判断に政治的圧力</span>を加える調査は不可
+              </td>
+            </tr>
+            <tr>
+              <td class="td-label">人権との関係</td>
+              <td>
+                <span class="badge-ng">禁止</span> 基本的人権を侵害する調査は不可<br>
+                特に<span class="kw">思想・良心を侵害する質問</span>や<span class="kw">プライバシー侵害</span>に及ぶ調査は禁止
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+      <!-- ミニテスト4 -->
+      <div class="mini-test">
+        <div class="mini-test-header">✏️ ミニテスト — 議院の権能</div>
+        <div class="mini-test-body">
+          <div class="mq">
+            <div class="mq-text"><span class="mq-num">1.</span>国政調査権の主体は<span class="mb" onclick="this.classList.toggle('open')" data-ans="各議院">　　　</span>。要求できるのは証人の<span class="mb" onclick="this.classList.toggle('open')" data-ans="出頭・証言・記録の提出">　　　　　　　　　</span>の3つのみ。</div>
+          </div>
+          <div class="mq">
+            <div class="mq-text"><span class="mq-num">2.</span>搜索・押収などの強制手段は<span class="mb" onclick="this.classList.toggle('open')" data-ans="認められない">　　　　　</span>。</div>
+          </div>
+          <div class="mq">
+            <div class="mq-text"><span class="mq-num">3.</span>国政調査権の性質について、通説は<span class="mb" onclick="this.classList.toggle('open')" data-ans="補助的権能説">　　　　　</span>をとる。</div>
+          </div>
+          <div class="mq">
+            <div class="mq-text"><span class="mq-num">4.</span>裁判所とは異なる目的で行う<span class="mb" onclick="this.classList.toggle('open')" data-ans="並行調査">　　　　</span>は許される（ロッキード事件）。</div>
+          </div>
+          <div class="mq">
+            <div class="mq-text"><span class="mq-num">5.</span>議員懲罰による除名への不服は<span class="mb" onclick="this.classList.toggle('open')" data-ans="司法裁判所に出訴できない">　　　　　　　　　</span>（司法権の限界）。</div>
+          </div>
+          <button class="mini-reveal-btn" onclick="(function(btn){btn.closest('.mini-test').querySelectorAll('.mb').forEach(function(b){b.classList.add('open')});btn.style.display='none'})(this)">全て表示</button>
+        </div>
+      </div>
+
+  <!-- まとめ -->
+  <div class="summary-box">
+    <strong style="font-size:15px; letter-spacing:1px">📌 第21章 最重要まとめ</strong>
+    <ul>
+      <li>不逮捕特権の例外：<strong>院外の現行犯</strong>と<strong>議院の許諾</strong>（院内現行犯は含まない）</li>
+      <li>免責特権：法的責任のみ免除。政治責任・政党除名は免除されない</li>
+      <li>国務大臣の立場での発言は免責特権の対象外</li>
+      <li>緊急集会を求められるのは<strong>内閣のみ</strong>（参議院議員からは不可）</li>
+      <li>緊急集会の措置は次の国会開会後<strong>10日以内</strong>に衆議院の同意がなければ将来に向かって失効</li>
+      <li>除名・再可決は<strong>出席議員の3/2以上</strong>（総議員ではない）</li>
+      <li>憲法改正の発議は<strong>各院の総議員の3/2以上</strong></li>
+      <li>国政調査権：主体は<strong>各議院</strong>、強制手段（捜索・押収）は<strong>不可</strong>、通説は<strong>補助的権能説</strong></li>
+    </ul>
+  </div>
+
+</div>
+
+<div class="footer">GAMBA憲法 第21章 国会② ｜ 江原予備校</div>
+</body>
+</html>

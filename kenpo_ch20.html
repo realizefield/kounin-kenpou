@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GAMBA憲法 第20章 国会①</title>
+<style>
+  :root {
+    --navy: #1B2A4A;
+    --crimson: #C0392B;
+    --gold: #D4A017;
+    --light-bg: #F4F6F9;
+    --white: #FFFFFF;
+    --text: #2C3E50;
+    --border: #DDE3ED;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Meiryo', 'メイリオ', 'MS PGothic', sans-serif;
+    background: var(--light-bg);
+    color: var(--text);
+    line-height: 1.8;
+  }
+  /* ヘッダー */
+  .header {
+    background: var(--navy);
+    color: var(--white);
+    padding: 24px 20px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    background: rgba(192,57,43,0.15);
+    border-radius: 50%;
+  }
+  .chapter-label {
+    font-size: 13px;
+    letter-spacing: 3px;
+    color: #8FA8CC;
+    margin-bottom: 6px;
+  }
+  .chapter-title {
+    font-size: 26px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+  .chapter-title span { color: var(--crimson); }
+  .chapter-sub {
+    font-size: 13px;
+    color: #8FA8CC;
+    letter-spacing: 1px;
+  }
+
+  /* 進捗バー */
+  .progress-bar {
+    background: #2D3F60;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    color: #8FA8CC;
+  }
+  .progress-track {
+    flex: 1;
+    height: 4px;
+    background: #3D5070;
+    border-radius: 2px;
+  }
+  .progress-fill {
+    height: 100%;
+    width: 71.4%; /* 20/28 */
+    background: var(--crimson);
+    border-radius: 2px;
+  }
+
+  /* コンテンツ */
+  .container { max-width: 800px; margin: 0 auto; padding: 20px 16px 60px; }
+
+  /* セクション */
+  .section {
+    background: var(--white);
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .section-header {
+    background: var(--navy);
+    color: var(--white);
+    padding: 12px 18px;
+    font-size: 15px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-header .num {
+    background: var(--crimson);
+    color: white;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: bold; flex-shrink: 0;
+  }
+  .section-body { padding: 18px; }
+
+  /* 条文ボックス */
+  .article-box {
+    background: #EEF2F8;
+    border-left: 4px solid var(--navy);
+    border-radius: 0 6px 6px 0;
+    padding: 12px 15px;
+    margin-bottom: 16px;
+    font-size: 14px;
+  }
+  .article-box .art-num {
+    font-weight: bold;
+    color: var(--navy);
+    font-size: 13px;
+    margin-bottom: 4px;
+  }
+
+  /* ポイントカード */
+  .point-card {
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 14px;
+    overflow: hidden;
+  }
+  .point-card-title {
+    background: #EEF2F8;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: bold;
+    color: var(--navy);
+    border-bottom: 1px solid var(--border);
+  }
+  .point-card-body {
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+
+  /* 重要語 */
+  .kw { color: var(--crimson); font-weight: bold; }
+  .kw-blue { color: var(--navy); font-weight: bold; }
+
+  /* テーブル */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin: 12px 0;
+  }
+  th {
+    background: var(--navy);
+    color: white;
+    padding: 8px 10px;
+    text-align: center;
+    font-weight: bold;
+  }
+  td {
+    padding: 8px 10px;
+    border: 1px solid var(--border);
+    vertical-align: top;
+    line-height: 1.6;
+  }
+  tr:nth-child(even) td { background: #F8FAFC; }
+  .td-label {
+    background: #EEF2F8;
+    font-weight: bold;
+    color: var(--navy);
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  /* 語呂 */
+  .goryo {
+    background: #FFF8E6;
+    border: 2px solid var(--gold);
+    border-radius: 8px;
+    padding: 12px 15px;
+    margin: 12px 0;
+    font-size: 14px;
+  }
+  .goryo-title {
+    font-size: 12px;
+    color: var(--gold);
+    font-weight: bold;
+    margin-bottom: 6px;
+    letter-spacing: 1px;
+  }
+  .goryo-main {
+    font-size: 17px;
+    font-weight: bold;
+    color: #7D5A00;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+  .goryo-sub { font-size: 12px; color: #8B6914; }
+
+  /* 注意ボックス */
+  .caution {
+    background: #FFF0EE;
+    border-left: 4px solid var(--crimson);
+    border-radius: 0 6px 6px 0;
+    padding: 10px 14px;
+    margin: 10px 0;
+    font-size: 13px;
+  }
+  .caution-title { font-weight: bold; color: var(--crimson); margin-bottom: 4px; }
+
+  /* チャート */
+  .chart-box {
+    background: #F0F4FA;
+    border-radius: 8px;
+    padding: 14px;
+    margin: 12px 0;
+    font-size: 13px;
+  }
+  .chart-title {
+    font-weight: bold;
+    color: var(--navy);
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+  .flow {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin: 6px 0;
+  }
+  .flow-item {
+    background: var(--navy);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+  }
+  .flow-item.red { background: var(--crimson); }
+  .flow-item.gold { background: var(--gold); color: #333; }
+  .flow-arrow { color: var(--navy); font-weight: bold; font-size: 14px; }
+
+  /* まとめボックス */
+  .summary-box {
+    background: var(--navy);
+    color: white;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  .summary-box ul { padding-left: 18px; line-height: 2; }
+  .summary-box li::marker { color: var(--crimson); }
+
+
+  /* ミニテスト */
+  .mini-test {
+    background: #F0F4FA;
+    border: 2px solid var(--navy);
+    border-radius: 10px;
+    margin-top: 18px;
+    overflow: hidden;
+  }
+  .mini-test-header {
+    background: var(--navy);
+    color: white;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .mini-test-body { padding: 14px; }
+  .mq { margin-bottom: 14px; font-size: 14px; }
+  .mq-text { margin-bottom: 8px; line-height: 1.9; }
+  .mq-num { font-weight: bold; color: var(--navy); margin-right: 4px; }
+  .mb {
+    display: inline-block;
+    min-width: 70px;
+    border-bottom: 2px solid var(--navy);
+    color: transparent;
+    background: #DDE3ED;
+    border-radius: 3px;
+    padding: 1px 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: bold;
+    font-size: 14px;
+    vertical-align: middle;
+    user-select: none;
+  }
+  .mb.open {
+    color: var(--crimson);
+    background: #FFF0EE;
+    border-bottom-color: var(--crimson);
+  }
+  .mini-reveal-btn {
+    display: inline-block;
+    background: var(--navy);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 16px;
+    font-size: 12px;
+    cursor: pointer;
+    font-family: inherit;
+    margin-top: 4px;
+  }
+  .mini-reveal-btn:hover { background: #2D4070; }
+  .mini-score {
+    text-align: right;
+    font-size: 12px;
+    color: #888;
+    margin-top: 6px;
+  }
+  /* フッター */
+  .footer {
+    background: var(--navy);
+    color: #8FA8CC;
+    text-align: center;
+    padding: 16px;
+    font-size: 12px;
+    margin-top: 30px;
+  }
+
+  /* 優越まとめテーブル */
+  .yuetsu-table th { font-size: 12px; }
+  .yuetsu-table td { font-size: 12px; text-align: center; }
+  .td-ok { color: #27AE60; font-weight: bold; }
+  .td-no { color: var(--crimson); font-weight: bold; }
+  .td-optional { color: #E67E22; font-weight: bold; }
+</style>
+</head>
+<body>
+
+<!-- ヘッダー -->
+<div class="header">
+  <div class="chapter-label">GAMBA 憲法 ▶ 第20章</div>
+  <div class="chapter-title">国会 <span>①</span></div>
+  <div class="chapter-sub">国会の地位・二院制・衆議院の優越</div>
+</div>
+
+<!-- 進捗バー -->
+<div class="progress-bar">
+  <span>20/28</span>
+  <div class="progress-track"><div class="progress-fill"></div></div>
+  <span>71%</span>
+</div>
+
+<div class="container">
+
+  <!-- セクション1: 国会の地位 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="num">1</div>
+      国会の地位（憲法41条）
+    </div>
+    <div class="section-body">
+
+      <div class="article-box">
+        <div class="art-num">憲法41条</div>
+        国会は、国権の<strong>最高機関</strong>であつて、国の<strong>唯一の立法機関</strong>である。
+      </div>
+
+      <div class="point-card">
+        <div class="point-card-title">① 「最高機関」の意味</div>
+        <div class="point-card-body">
+          <span class="kw">政治的美称説（通説）</span>：国会が国民に最も近く、国政の中心的地位を占める機関であることを強調する<strong>政治的な呼称</strong>にすぎない。<br>
+          → 国会が法的に他の機関（内閣・裁判所）に命令・指揮できるわけでは<strong>ない</strong><br><br>
+          <span class="kw" style="color:#666">統括機関説（少数説）</span>：国会が三権の最高機関として国政全般を統括するという法的意味があるとする説。
+          <div class="caution" style="margin-top:10px">
+            <div class="caution-title">⚠ 試験頻出ひっかけ</div>
+            「最高機関＝他の機関に命令できる」は<span class="kw">誤り</span>。内閣には解散権、裁判所には違憲審査権がある。
+          </div>
+        </div>
+      </div>
+
+      <div class="point-card">
+        <div class="point-card-title">② 「唯一の立法機関」の意味（2つの原則）</div>
+        <div class="point-card-body">
+          <table>
+            <tr>
+              <th>原則</th>
+              <th>内容</th>
+              <th>例外</th>
+            </tr>
+            <tr>
+              <td class="td-label">国会<span class="kw">中心</span>立法の原則</td>
+              <td>立法は国会以外の機関には認めない</td>
+              <td>議院規則・最高裁判所規則</td>
+            </tr>
+            <tr>
+              <td class="td-label">国会<span class="kw">単独</span>立法の原則</td>
+              <td>立法に国会以外の関与を必要としない</td>
+              <td>地方自治特別法の住民投票（95条）</td>
+            </tr>
+          </table>
+
+          <div class="caution">
+            <div class="caution-title">⚠ 「立法」とは？（重要！）</div>
+            <span class="kw">実質的意味の立法</span>＝一般的・抽象的法規範の定立（通説）<br>
+            ※形式的意味の立法（法律という名前のもの）ではない！<br>
+            → 独立命令・緊急勅令は現行憲法では認められない。
+          </div>
+
+          <div class="caution">
+            <div class="caution-title">⚠ 内閣の法律案提出権</div>
+            内閣法5条で認められている。発案は立法そのものではなく立法の準備行為であるから、<span class="kw">国会単独立法の原則に反しない</span>（通説）。
+          </div>
+        </div>
+      </div>
+
+      <div class="point-card">
+        <div class="point-card-title">③ 「代表機関」の意味（43条1項）</div>
+        <div class="point-card-body">
+          <span class="kw">政治的意味（通説）</span>：代表機関の行為が法的に国民の行為とみなされるという法的意味ではなく、<strong>国民意思を反映するものとみなされるという政治的意味</strong>。<br><br>
+          → 自由委任の原則：議員は選挙区の選挙人の意思に法的に拘束されず自由に活動できる。
+        </div>
+      </div>
+
+
+      <!-- ミニテスト1 -->
+      <div class="mini-test">
+        <div class="mini-test-header">✏️ ミニテスト — 国会の地位</div>
+        <div class="mini-test-body">
+          <div class="mq">
+            <div class="mq-text"><span class="mq-num">1.</span>「国権の最高機関」の意味について、通説は国会が国政の中心的地位を占めることを強調する<span class="mb" onclick="this.classList.toggle('open')" data-ans="政治的美称">　　　　</span>にすぎないとする。</div>
+          </div>
+          <div class="mq">
+            <div class="mq-text"><span class="mq-num">2.</span>「唯一の立法機関」における「立法」とは、通説では<span class="mb" onclick="this.classList.toggle('open')" data-ans="一般的・抽象的">　　　　　</span>法規範の定立（実質的意味の立法）をさす。</div>
+          </div>
+          <div class="mq">
+            <div class="mq-text"><span class="mq-num">3.</span>国会中心立法の原則の例外として、<span class="mb" onclick="this.classList.toggle('open')" data-ans="議院規則">　　　　</span>と<span class="mb" onclick="this.classList.toggle('open')" data-ans="最高裁判所規則">　　　　　</span>がある。</div>
+          </div>
+          <div class="mq">
+            <div class="mq-text"><span class="mq-num">4.</span>内閣に法律案の提出権を認めることは、国会単独立法の原則に<span class="mb" onclick="this.classList.toggle('open')" data-ans="反しない">　　　</span>（通説）。</div>
+          </div>
+          <button class="mini-reveal-btn" onclick="(function(btn){btn.closest('.mini-test').querySelectorAll('.mb').forEach(function(b){b.classList.add('open')});btn.style.display='none'})(this)">全て表示</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- セクション2: 二院制と両院の差異 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="num">2</div>
+      二院制と両院の差異
+    </div>
+    <div class="section-body">
+
+      <p style="font-size:14px; margin-bottom:12px">日本国憲法は衆議院と参議院の<span class="kw">二院制</span>を採用。<strong>同時活動の原則</strong>（同時に召集・閉会）と<strong>独立活動の原則</strong>（各院が独立して審議・議決）が基本。</p>
+
+      <table>
+        <tr>
+          <th style="width:25%">項目</th>
+          <th style="width:37.5%">衆議院</th>
+          <th style="width:37.5%">参議院</th>
+        </tr>
+        <tr>
+          <td class="td-label">任期</td>
+          <td><span class="kw">4年</span>（解散あり→任期前終了）<br>解散で議員全員の資格を失う</td>
+          <td><span class="kw">6年</span>（3年ごとに半数改選）<br>解散なし</td>
+        </tr>
+        <tr>
+          <td class="td-label">議員定数</td>
+          <td>465人<br>（小選挙区289+比例176）</td>
+          <td>248人<br>（選挙区148+比例100）</td>
+        </tr>
+        <tr>
+          <td class="td-label">議員資格</td>
+          <td>満<span class="kw">25歳</span>以上</td>
+          <td>満<span class="kw">30歳</span>以上</td>
+        </tr>
+        <tr>
+          <td class="td-label">選挙区</td>
+          <td>小選挙区＋拘束名簿式比例代表（全国11ブロック）</td>
+          <td>都道府県単位＋非拘束名簿式比例代表（全国1区）</td>
+        </tr>
+      </table>
+
+      <div class="goryo">
+        <div class="goryo-title">🎵 語呂合わせ：参議院のボイコット日数</div>
+        <div class="goryo-main">「一浪して大学へ」＝60・30・30・10</div>
+        <div class="goryo-sub">法律案60日 / 予算30日 / 条約30日 / 首相指名10日（国会休会中は除く）</div>
+      </div>
+
+
+      <!-- ミニテスト2 -->
+      <div class="mini-test">
+        <div class="mini-test-header">✏️ ミニテスト — 二院制</div>
+        <div class="mini-test-body">
+          <div class="mq">
+            <div class="mq-text"><span class="mq-num">1.</span>衆議院議員の任期は<span class="mb" onclick="this.classList.toggle('open')" data-ans="4年">　</span>、参議院議員の任期は<span class="mb" onclick="this.classList.toggle('open')" data-ans="6年">　</span>（3年ごとに半数改選）。</div>
+          </div>
+          <div class="mq">
+            <div class="mq-text"><span class="mq-num">2.</span>衆議院議員の被選挙権は満<span class="mb" onclick="this.classList.toggle('open')" data-ans="25歳">　　</span>以上、参議院議員は満<span class="mb" onclick="this.classList.toggle('open')" data-ans="30歳">　　</span>以上。</div>
+          </div>
+          <div class="mq">
+            <div class="mq-text"><span class="mq-num">3.</span>衆議院が解散された場合、参議院は<span class="mb" onclick="this.classList.toggle('open')" data-ans="同時に閉会">　　　　</span>となる（同時活動の原則）。</div>
+          </div>
+          <div class="mq">
+            <div class="mq-text"><span class="mq-num">4.</span>参議院のボイコット日数：法律案<span class="mb" onclick="this.classList.toggle('open')" data-ans="60日">　　</span>、予算・条約<span class="mb" onclick="this.classList.toggle('open')" data-ans="30日">　　</span>、首相指名<span class="mb" onclick="this.classList.toggle('open')" data-ans="10日">　　</span>。</div>
+          </div>
+          <button class="mini-reveal-btn" onclick="(function(btn){btn.closest('.mini-test').querySelectorAll('.mb').forEach(function(b){b.classList.add('open')});btn.style.display='none'})(this)">全て表示</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- セクション3: 衆議院の優越 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="num">3</div>
+      衆議院の優越
+    </div>
+    <div class="section-body">
+
+      <p style="font-size:14px; margin-bottom:14px">衆議院は参議院より任期が短く解散もあり、民意を問い直す機会が多い。そのため憲法上、<span class="kw">衆議院の優越</span>が認められている。</p>
+
+      <div class="point-card">
+        <div class="point-card-title">【A】権限の上での優越（衆議院だけに認められる権能）</div>
+        <div class="point-card-body">
+          <p>① <span class="kw">内閣不信任決議権</span>（69条）…法的意味を持つ不信任決議<br>
+          　→ 内閣は10日以内に衆議院を解散するか、総辞職しなければならない<br><br>
+          ② <span class="kw">予算先議権</span>（60条1項）…予算は先に衆議院に提出しなければならない</p>
+          <div class="caution">
+            <div class="caution-title">⚠ 参議院の不信任決議・問責決議</div>
+            参議院の不信任決議や参議院から個人（総理・国務大臣）への問責決議は<span class="kw">政治責任を問うにすぎない</span>（問責決議）。法的拘束力はなく無視できる。
+          </div>
+        </div>
+      </div>
+
+      <div class="point-card">
+        <div class="point-card-title">【B】議決の上での優越（4つ）</div>
+        <div class="point-card-body">
+
+          <table class="yuetsu-table">
+            <tr>
+              <th>議決の種類</th>
+              <th>衆議院の再議決</th>
+              <th>参議院ボイコット<br>日数・効果</th>
+              <th>両院協議会</th>
+              <th>衆議院の<br>先議権</th>
+            </tr>
+            <tr>
+              <td class="td-label">①法律案<br>(59条)</td>
+              <td class="td-ok">必要<br>出席3/2以上</td>
+              <td>60日→<span class="kw">否決とみなせる</span></td>
+              <td class="td-optional">任意<br>（衆議院の判断）</td>
+              <td class="td-no">なし</td>
+            </tr>
+            <tr>
+              <td class="td-label">②予算<br>(60条)</td>
+              <td class="td-no">不要</td>
+              <td>30日→<span class="kw">衆議院の議決＝国会の議決</span></td>
+              <td class="td-ok">必要的</td>
+              <td class="td-ok">あり</td>
+            </tr>
+            <tr>
+              <td class="td-label">③条約の承認<br>(61条)</td>
+              <td class="td-no">不要</td>
+              <td>30日→<span class="kw">衆議院の議決＝国会の議決</span></td>
+              <td class="td-ok">必要的</td>
+              <td class="td-no">なし</td>
+            </tr>
+            <tr>
+              <td class="td-label">④内閣総理大臣<br>の指名(67条)</td>
+              <td class="td-no">不要</td>
+              <td>10日→<span class="kw">衆議院の議決＝国会の議決</span></td>
+              <td class="td-ok">必要的</td>
+              <td class="td-no">なし</td>
+            </tr>
+          </table>
+
+          <div class="caution">
+            <div class="caution-title">⚠ 最重要ひっかけ：法律案の再可決要件</div>
+            「<span class="kw">総議員</span>の3分の2以上」は<span class="kw">誤り！</span><br>
+            正しくは「<span class="kw">出席議員</span>の3分の2以上」（59条2項）
+          </div>
+
+          <div class="caution" style="margin-top:8px">
+            <div class="caution-title">⚠ 内閣総理大臣の指名：先議権なし！</div>
+            予算と違い、総理の指名は衆議院・参議院どちらから先に指名してもよい（先議権なし）。
+          </div>
+        </div>
+      </div>
+
+      <div class="point-card">
+        <div class="point-card-title">【C】両院が対等なもの（衆議院の優越がないもの）</div>
+        <div class="point-card-body">
+          <ul style="padding-left:18px; font-size:14px; line-height:2">
+            <li><span class="kw">憲法改正の発議</span>（96条1項）…両院各々の総議員の3分の2以上</li>
+            <li>皇室の財産授受の議決（8条）</li>
+            <li>予備費の事後承認（87条2項）</li>
+            <li>決算審査（90条）</li>
+          </ul>
+          <div class="caution">
+            <div class="caution-title">⚠ 憲法改正の発議</div>
+            衆議院の優越は<span class="kw">一切ない</span>。両院対等。各院の<span class="kw">総議員</span>（出席ではない！）の3分の2以上が必要。
+          </div>
+        </div>
+      </div>
+
+      <div class="chart-box">
+        <div class="chart-title">📊 国会法上の優越（条文外知識）</div>
+        臨時会・特別会の<span class="kw">会期の決定</span>および国会の<span class="kw">会期の延長の決定</span>についても、両院の議決が一致しないときは<strong>衆議院の議決による</strong>（国会法11条・12条・13条）。
+      </div>
+
+
+      <!-- ミニテスト3 -->
+      <div class="mini-test">
+        <div class="mini-test-header">✏️ ミニテスト — 衆議院の優越</div>
+        <div class="mini-test-body">
+          <div class="mq">
+            <div class="mq-text"><span class="mq-num">1.</span>衆議院だけに認められている権能は①<span class="mb" onclick="this.classList.toggle('open')" data-ans="内閣不信任決議権">　　　　　　</span>と②<span class="mb" onclick="this.classList.toggle('open')" data-ans="予算先議権">　　　　</span>の2つ。</div>
+          </div>
+          <div class="mq">
+            <div class="mq-text"><span class="mq-num">2.</span>法律案の再可決には<span class="mb" onclick="this.classList.toggle('open')" data-ans="出席議員">　　　　</span>の3分の2以上が必要（総議員ではない）。</div>
+          </div>
+          <div class="mq">
+            <div class="mq-text"><span class="mq-num">3.</span>予算・条約・首相指名の場合、両院協議会は<span class="mb" onclick="this.classList.toggle('open')" data-ans="必要的">　　　</span>。法律案は<span class="mb" onclick="this.classList.toggle('open')" data-ans="任意的">　　　</span>。</div>
+          </div>
+          <div class="mq">
+            <div class="mq-text"><span class="mq-num">4.</span>憲法改正の発議には衆議院の優越は<span class="mb" onclick="this.classList.toggle('open')" data-ans="ない">　　</span>。各院の<span class="mb" onclick="this.classList.toggle('open')" data-ans="総議員">　　　</span>の3分の2以上が必要。</div>
+          </div>
+          <button class="mini-reveal-btn" onclick="(function(btn){btn.closest('.mini-test').querySelectorAll('.mb').forEach(function(b){b.classList.add('open')});btn.style.display='none'})(this)">全て表示</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- セクション4: 両院協議会 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="num">4</div>
+      両院協議会のポイント
+    </div>
+    <div class="section-body">
+      <p style="font-size:14px; margin-bottom:12px">両院協議会とは、両院の議決が対立した場合に<strong>妥協案の成立を図るために設けられる協議会</strong>。各院から選ばれた各10人の委員で構成される。</p>
+
+      <table>
+        <tr>
+          <th>場合</th>
+          <th>開催</th>
+          <th>結果</th>
+        </tr>
+        <tr>
+          <td class="td-label">法律案</td>
+          <td><span class="td-optional">任意的</span>（衆議院が開くかどうかを判断）</td>
+          <td>不一致→衆議院の再可決（出席3/2以上）</td>
+        </tr>
+        <tr>
+          <td class="td-label">予算・条約・<br>首相指名</td>
+          <td><span class="td-ok">必要的</span>（必ず開かなければならない）</td>
+          <td>不一致・放置→衆議院の議決＝国会の議決</td>
+        </tr>
+      </table>
+
+      <div class="goryo">
+        <div class="goryo-title">🎵 語呂合わせ：必要的協議会のセット</div>
+        <div class="goryo-main">「予条指は必要」（よじょうしはひつよう）</div>
+        <div class="goryo-sub">予算・条約・指名（首相）は必要的両院協議会→再議決なし</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- まとめ -->
+  <div class="summary-box">
+    <strong style="font-size:15px; letter-spacing:1px">📌 第20章 最重要まとめ</strong>
+    <ul>
+      <li>「最高機関」＝<strong>政治的美称</strong>（法的意味なし）【通説】</li>
+      <li>「唯一の立法機関」＝国会中心立法＋国会単独立法の原則</li>
+      <li>法律案の再可決：<strong>出席議員の3/2以上</strong>（総議員ではない！）</li>
+      <li>予算・条約・首相指名：参議院ボイコット後は<strong>再議決なし、両院協議会は必要的</strong></li>
+      <li>予算のみ衆議院に<strong>先議権あり</strong></li>
+      <li>憲法改正の発議：<strong>両院対等、衆議院の優越なし</strong></li>
+      <li>参議院のボイコット日数：<span style="color:#F5A623; font-weight:bold">法60日 / 予算・条約30日 / 首相指名10日</span></li>
+    </ul>
+  </div>
+
+</div>
+
+<div class="footer">
+  GAMBA憲法 第20章 国会① ｜ 江原予備校
+</div>
+
+</body>
+</html>

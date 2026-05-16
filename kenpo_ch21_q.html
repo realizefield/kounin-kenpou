@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GAMBA憲法 第21章 演習 国会②</title>
+<style>
+  :root {
+    --navy: #1B2A4A;
+    --crimson: #C0392B;
+    --gold: #D4A017;
+    --green: #27AE60;
+    --light-bg: #F4F6F9;
+    --white: #FFFFFF;
+    --text: #2C3E50;
+    --border: #DDE3ED;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Meiryo', 'メイリオ', 'MS PGothic', sans-serif;
+    background: var(--light-bg);
+    color: var(--text);
+    line-height: 1.8;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .header { background: var(--navy); color: white; padding: 20px; text-align: center; }
+  .header-label { font-size: 12px; color: #8FA8CC; letter-spacing: 3px; margin-bottom: 4px; }
+  .header-title { font-size: 22px; font-weight: bold; letter-spacing: 2px; }
+  .header-title span { color: var(--crimson); }
+  .score-bar { background: #2D3F60; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: #8FA8CC; }
+  .score-display { color: white; font-weight: bold; font-size: 16px; }
+  .container { max-width: 800px; margin: 0 auto; padding: 20px 16px 80px; }
+
+  .q-card { background: var(--white); border-radius: 10px; margin-bottom: 20px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .q-header { background: var(--navy); color: white; padding: 10px 16px; display: flex; justify-content: space-between; align-items: center; }
+  .q-num { font-size: 13px; font-weight: bold; letter-spacing: 1px; }
+  .q-tag { font-size: 11px; background: rgba(255,255,255,0.15); padding: 2px 8px; border-radius: 10px; }
+  .q-body { padding: 16px; }
+  .q-text { font-size: 14px; margin-bottom: 14px; line-height: 1.9; }
+
+  .blank { display: inline-block; min-width: 60px; border-bottom: 2px solid var(--navy); color: transparent; background: #EEF2F8; border-radius: 3px; padding: 0 4px; cursor: pointer; transition: all 0.2s; font-weight: bold; font-size: 14px; vertical-align: middle; }
+  .blank.revealed { color: var(--crimson); background: #FFF0EE; border-bottom-color: var(--crimson); }
+
+  .choices { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+  .choice-btn { background: #F0F4FA; border: 2px solid var(--border); border-radius: 8px; padding: 10px 14px; font-size: 14px; text-align: left; cursor: pointer; transition: all 0.2s; color: var(--text); font-family: inherit; line-height: 1.6; }
+  .choice-btn:hover { background: #E4EBF5; border-color: var(--navy); }
+  .choice-btn.correct { background: #E8F8F0; border-color: var(--green); color: var(--green); font-weight: bold; }
+  .choice-btn.wrong { background: #FFF0EE; border-color: var(--crimson); color: var(--crimson); text-decoration: line-through; }
+  .choice-btn.show-answer { background: #E8F8F0; border-color: var(--green); color: var(--green); font-weight: bold; }
+  .choice-btn:disabled { cursor: default; }
+
+  .ox-buttons { display: flex; gap: 10px; margin-bottom: 14px; }
+  .ox-btn { flex: 1; padding: 14px; font-size: 22px; border: 2px solid var(--border); border-radius: 8px; cursor: pointer; background: #F0F4FA; transition: all 0.2s; font-family: inherit; }
+  .ox-btn:hover { background: #E4EBF5; }
+  .ox-btn.correct { background: #E8F8F0; border-color: var(--green); }
+  .ox-btn.wrong { background: #FFF0EE; border-color: var(--crimson); }
+  .ox-btn:disabled { cursor: default; }
+
+  .explanation { display: none; background: #F8FAFC; border-left: 4px solid var(--navy); border-radius: 0 6px 6px 0; padding: 12px 14px; font-size: 13px; line-height: 1.8; margin-top: 6px; }
+  .explanation.show { display: block; }
+  .exp-correct { border-left-color: var(--green); }
+  .exp-wrong { border-left-color: var(--crimson); }
+  .exp-label { font-weight: bold; margin-bottom: 4px; font-size: 12px; letter-spacing: 1px; }
+  .exp-correct .exp-label { color: var(--green); }
+  .exp-wrong .exp-label { color: var(--crimson); }
+  .kw { color: var(--crimson); font-weight: bold; }
+
+  .fill-area { background: #F0F4FA; border-radius: 8px; padding: 14px; margin-bottom: 12px; font-size: 14px; line-height: 2.2; }
+  .fill-reveal-btn { background: var(--navy); color: white; border: none; border-radius: 6px; padding: 8px 18px; font-size: 13px; cursor: pointer; font-family: inherit; margin-top: 8px; }
+  .fill-reveal-btn:hover { background: #2D4070; }
+
+  .result-area { display: none; background: var(--navy); color: white; border-radius: 10px; padding: 24px; text-align: center; margin-top: 20px; }
+  .result-area.show { display: block; }
+  .result-score { font-size: 40px; font-weight: bold; color: var(--gold); margin: 10px 0; }
+  .result-msg { font-size: 16px; margin-bottom: 16px; }
+  .restart-btn { background: var(--crimson); color: white; border: none; border-radius: 8px; padding: 12px 30px; font-size: 15px; cursor: pointer; font-family: inherit; }
+
+  .footer { background: var(--navy); color: #8FA8CC; text-align: center; padding: 14px; font-size: 12px; margin-top: 30px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-label">GAMBA 憲法 ▶ 第21章 演習</div>
+  <div class="header-title">国会 <span>②</span></div>
+</div>
+
+<div class="score-bar">
+  <span>全12問</span>
+  <span class="score-display" id="scoreDisplay">0 / 0</span>
+  <span id="progressText">0%</span>
+</div>
+
+<div class="container">
+
+  <!-- Q1 -->
+  <div class="q-card" id="q1">
+    <div class="q-header"><span class="q-num">Q1</span><span class="q-tag">不逮捕特権 ○×</span></div>
+    <div class="q-body">
+      <div class="q-text">国会議員の不逮捕特権において、「法律の定める場合」とは院外における現行犯の場合と議院の許諾がある場合をいい、院内における現行犯の場合は不逮捕特権が及び逮捕できない。</div>
+      <div class="ox-buttons">
+        <button class="ox-btn" onclick="answerOX('q1',true,this)">○</button>
+        <button class="ox-btn" onclick="answerOX('q1',false,this)">×</button>
+      </div>
+      <div class="explanation" id="exp-q1">
+        <div class="exp-label">✓ 正しい</div>
+        「法律の定める場合」（国会法33条）は①<span class="kw">院外</span>における現行犯と②<span class="kw">議院の許諾</span>がある場合。<span class="kw">院内</span>の現行犯は含まれないため、院内で現行犯を犯した議員は院内でも逮捕できない（不逮捕特権が及ぶ）。
+      </div>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-card" id="q2">
+    <div class="q-header"><span class="q-num">Q2</span><span class="q-tag">不逮捕特権 ○×</span></div>
+    <div class="q-body">
+      <div class="q-text">国会議員の不逮捕特権は国会の会期中のみ認められるため、衆議院が解散されたときに開催される参議院の緊急集会においては、参議院議員に不逮捕特権は認められない。</div>
+      <div class="ox-buttons">
+        <button class="ox-btn" onclick="answerOX('q2',false,this)">○</button>
+        <button class="ox-btn" onclick="answerOX('q2',true,this)">×</button>
+      </div>
+      <div class="explanation" id="exp-q2">
+        <div class="exp-label">✗ 誤り</div>
+        緊急集会は国会の代行機関であるため、緊急集会中は<span class="kw">不逮捕特権も免責特権も認められる</span>（国会法100条1項）。「会期中のみ」という原則の例外である。
+      </div>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-card" id="q3">
+    <div class="q-header"><span class="q-num">Q3</span><span class="q-tag">免責特権 ○×</span></div>
+    <div class="q-body">
+      <div class="q-text">国会議員が国務大臣を兼職している場合、議院で行った国務大臣としての発言（政府の立場での発言）については免責特権が及ぶとするのが通説である。</div>
+      <div class="ox-buttons">
+        <button class="ox-btn" onclick="answerOX('q3',false,this)">○</button>
+        <button class="ox-btn" onclick="answerOX('q3',true,this)">×</button>
+      </div>
+      <div class="explanation" id="exp-q3">
+        <div class="exp-label">✗ 誤り</div>
+        免責特権は<span class="kw">国会議員としての活動</span>のみを対象とする。国務大臣の立場での発言には及ばない（通説）。どの「立場で」発言したかが判断基準となる。
+      </div>
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-card" id="q4">
+    <div class="q-header"><span class="q-num">Q4</span><span class="q-tag">免責特権 ○×</span></div>
+    <div class="q-body">
+      <div class="q-text">国会議員の免責特権によって免除される「責任」には民事・刑事の法的責任が含まれるが、所属政党による除名等の政治的責任は含まれない。したがって、政党は議員の院内での発言を理由に除名することができる。</div>
+      <div class="ox-buttons">
+        <button class="ox-btn" onclick="answerOX('q4',true,this)">○</button>
+        <button class="ox-btn" onclick="answerOX('q4',false,this)">×</button>
+      </div>
+      <div class="explanation" id="exp-q4">
+        <div class="exp-label">✓ 正しい</div>
+        免責される「責任」は<span class="kw">法的責任</span>（民事・刑事・懲戒責任）。<span class="kw">政治責任</span>は免除されないため、政党による除名は許される。政党は政治的結社であり、その制裁も政治的責任の追及と評価されるからである。
+      </div>
+    </div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-card" id="q5">
+    <div class="q-header"><span class="q-num">Q5</span><span class="q-tag">会期・特別会 ○×</span></div>
+    <div class="q-body">
+      <div class="q-text">衆議院が解散された場合、解散の日から30日以内に衆議院議員の総選挙を行い、その総選挙の日から40日以内に特別会を召集しなければならない。</div>
+      <div class="ox-buttons">
+        <button class="ox-btn" onclick="answerOX('q5',false,this)">○</button>
+        <button class="ox-btn" onclick="answerOX('q5',true,this)">×</button>
+      </div>
+      <div class="explanation" id="exp-q5">
+        <div class="exp-label">✗ 誤り（数字が逆！）</div>
+        正しくは、解散の日から<span class="kw">40日以内</span>に総選挙→総選挙の日から<span class="kw">30日以内</span>に特別会（54条1項）。「ヨ（40）→サ（30）」と覚えよう。
+      </div>
+    </div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-card" id="q6">
+    <div class="q-header"><span class="q-num">Q6</span><span class="q-tag">緊急集会 ○×</span></div>
+    <div class="q-body">
+      <div class="q-text">参議院の緊急集会を求めることができるのは内閣のみであり、参議院議員側から求めることはできない。また、緊急集会は国会の召集とは異なる制度であるため、天皇の国事行為としての召集は必要とされない。</div>
+      <div class="ox-buttons">
+        <button class="ox-btn" onclick="answerOX('q6',true,this)">○</button>
+        <button class="ox-btn" onclick="answerOX('q6',false,this)">×</button>
+      </div>
+      <div class="explanation" id="exp-q6">
+        <div class="exp-label">✓ 正しい</div>
+        緊急集会を求められるのは<span class="kw">内閣のみ</span>（54条2項ただし書）。参議院が自ら求めることはできない。また、通常の国会召集（天皇の国事行為、7条2号）とは別の制度なので<span class="kw">天皇による召集は不要</span>。
+      </div>
+    </div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-card" id="q7">
+    <div class="q-header"><span class="q-num">Q7</span><span class="q-tag">緊急集会 ○×</span></div>
+    <div class="q-body">
+      <div class="q-text">参議院の緊急集会でとられた措置は、次の国会開会の後10日以内に衆議院の同意が得られない場合には、その時点から遡及して効力を失う。</div>
+      <div class="ox-buttons">
+        <button class="ox-btn" onclick="answerOX('q7',false,this)">○</button>
+        <button class="ox-btn" onclick="answerOX('q7',true,this)">×</button>
+      </div>
+      <div class="explanation" id="exp-q7">
+        <div class="exp-label">✗ 誤り</div>
+        「遡及して」が誤り。衆議院の同意が得られない場合には<span class="kw">将来に向かって</span>効力を失う（54条3項）。過去の効果に遡及はしない。
+      </div>
+    </div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-card" id="q8">
+    <div class="q-header"><span class="q-num">Q8</span><span class="q-tag">定足数・表決数 選択</span></div>
+    <div class="q-body">
+      <div class="q-text">次のうち、「出席議員の3分の2以上」の多数による議決が必要とされる事項として、正しいものの組み合わせはどれか。<br>ア．秘密会の開催<br>イ．議員の懲罰による除名<br>ウ．憲法改正の発議<br>エ．法律案の衆議院による再可決</div>
+      <div class="choices">
+        <button class="choice-btn" onclick="answerChoice('q8',false,this)">①ア・ウ・エ</button>
+        <button class="choice-btn" onclick="answerChoice('q8',true,this)">②ア・イ・エ</button>
+        <button class="choice-btn" onclick="answerChoice('q8',false,this)">③ア・イ・ウ・エすべて</button>
+        <button class="choice-btn" onclick="answerChoice('q8',false,this)">④イ・ウ・エ</button>
+      </div>
+      <div class="explanation" id="exp-q8">
+        <div class="exp-label">✓ ②が正しい</div>
+        「出席議員の3/2以上」：ア秘密会・イ除名・エ再可決。<br>
+        ウ憲法改正の発議は「<span class="kw">各院の総議員の3/2以上</span>」であり「出席」ではなく「<span class="kw">総議員</span>」がカウント基準となる点で異なる。
+      </div>
+    </div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="q-card" id="q9">
+    <div class="q-header"><span class="q-num">Q9</span><span class="q-tag">国政調査権 ○×</span></div>
+    <div class="q-body">
+      <div class="q-text">国政調査権は各議院に与えられた権能であるが、その行使は議院の議決によって付託を受けた常任委員会または特別委員会に行わせることができ、委員会も調査権を行使できる。</div>
+      <div class="ox-buttons">
+        <button class="ox-btn" onclick="answerOX('q9',true,this)">○</button>
+        <button class="ox-btn" onclick="answerOX('q9',false,this)">×</button>
+      </div>
+      <div class="explanation" id="exp-q9">
+        <div class="exp-label">✓ 正しい</div>
+        国政調査権の主体は<span class="kw">各議院</span>。通常、常任委員会・特別委員会に付託して行使するため、委員会も調査権を行使できる（国会法104条1項）。
+      </div>
+    </div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="q-card" id="q10">
+    <div class="q-header"><span class="q-num">Q10</span><span class="q-tag">国政調査権 ○×</span></div>
+    <div class="q-body">
+      <div class="q-text">国政調査権の行使に当たっては、証人の出頭および証言ならびに記録の提出の要求のほか、搜索・押収などの強制手段も認められている。</div>
+      <div class="ox-buttons">
+        <button class="ox-btn" onclick="answerOX('q10',false,this)">○</button>
+        <button class="ox-btn" onclick="answerOX('q10',true,this)">×</button>
+      </div>
+      <div class="explanation" id="exp-q10">
+        <div class="exp-label">✗ 誤り</div>
+        憲法62条が認めるのは「<span class="kw">証人の出頭・証言・記録の提出</span>」の3つのみ。<span class="kw">搜索・押収・逮捕などの刑事手続き上の強制手段は認められない</span>（補助的権能説・通説）。
+      </div>
+    </div>
+  </div>
+
+  <!-- Q11 -->
+  <div class="q-card" id="q11">
+    <div class="q-header"><span class="q-num">Q11</span><span class="q-tag">国政調査権 ○×</span></div>
+    <div class="q-body">
+      <div class="q-text">裁判所で審理中の事件について、裁判所とは異なる目的（立法目的・行政監督目的）で議院が裁判所と並行して調査を行うことは、司法権の独立を侵害するものとして許されない。</div>
+      <div class="ox-buttons">
+        <button class="ox-btn" onclick="answerOX('q11',false,this)">○</button>
+        <button class="ox-btn" onclick="answerOX('q11',true,this)">×</button>
+      </div>
+      <div class="explanation" id="exp-q11">
+        <div class="exp-label">✗ 誤り</div>
+        裁判所とは<span class="kw">異なる目的</span>で行う<span class="kw">並行調査は許される</span>（ロッキード事件が例）。許されないのは、裁判官の訴訟指揮の当否・裁判内容の当否を調査すること（判決確定後も同様）。
+      </div>
+    </div>
+  </div>
+
+  <!-- Q12 穴埋め -->
+  <div class="q-card" id="q12">
+    <div class="q-header"><span class="q-num">Q12</span><span class="q-tag">総合 穴埋め</span></div>
+    <div class="q-body">
+      <div class="q-text">次の文の空欄を埋めなさい（クリックで答えを表示）。</div>
+      <div class="fill-area">
+        臨時会の召集を決定しなければならない義務的な場合として、いずれかの議院の
+        <span class="blank" onclick="revealBlank(this)" data-ans="総議員の4分の1">　　　　　　</span>
+        以上の要求がある場合がある。<br><br>
+        参議院の緊急集会でとられた措置は、次の国会開会後
+        <span class="blank" onclick="revealBlank(this)" data-ans="10日">　　</span>
+        以内に衆議院の同意がなければ、
+        <span class="blank" onclick="revealBlank(this)" data-ans="将来に向かって">　　　　　</span>
+        効力を失う（遡及しない）。<br><br>
+        議員懲罰による除名には
+        <span class="blank" onclick="revealBlank(this)" data-ans="出席議員">　　　　</span>
+        の3分の2以上の議決が必要であり、除名に不服があっても
+        <span class="blank" onclick="revealBlank(this)" data-ans="司法裁判所">　　　　</span>
+        に出訴することはできない。
+      </div>
+      <button class="fill-reveal-btn" onclick="revealAll('q12')">全て表示</button>
+    </div>
+  </div>
+
+  <!-- 結果 -->
+  <div class="result-area" id="resultArea">
+    <div style="font-size:14px; color:#8FA8CC;">演習完了！</div>
+    <div class="result-score" id="resultScore">--</div>
+    <div class="result-msg" id="resultMsg">--</div>
+    <button class="restart-btn" onclick="restart()">もう一度挑戦</button>
+  </div>
+
+</div>
+
+<div class="footer">GAMBA憲法 第21章 演習 国会② ｜ 江原予備校</div>
+
+<script>
+  var answered = 0, correct = 0;
+  var total = 11; // 穴埋め除く
+
+  function updateScore() {
+    document.getElementById('scoreDisplay').textContent = correct + ' / ' + answered;
+    var pct = total > 0 ? Math.round(answered / total * 100) : 0;
+    document.getElementById('progressText').textContent = pct + '%';
+    if (answered >= total) showResult();
+  }
+
+  function answerOX(qid, isCorrect, btn) {
+    var card = document.getElementById(qid);
+    var btns = card.querySelectorAll('.ox-btn');
+    btns.forEach(function(b){ b.disabled = true; });
+    var exp = document.getElementById('exp-' + qid);
+    if (isCorrect) {
+      btn.classList.add('correct');
+      exp.classList.add('exp-correct');
+      correct++;
+    } else {
+      btn.classList.add('wrong');
+      exp.classList.add('exp-wrong');
+      btns.forEach(function(b){ if (b !== btn) b.classList.add('correct'); });
+    }
+    exp.classList.add('show');
+    answered++;
+    updateScore();
+  }
+
+  function answerChoice(qid, isCorrect, btn) {
+    var card = document.getElementById(qid);
+    var btns = card.querySelectorAll('.choice-btn');
+    btns.forEach(function(b){ b.disabled = true; });
+    var exp = document.getElementById('exp-' + qid);
+    if (isCorrect) {
+      btn.classList.add('correct');
+      exp.classList.add('exp-correct');
+      correct++;
+    } else {
+      btn.classList.add('wrong');
+      exp.classList.add('exp-wrong');
+      btns.forEach(function(b){
+        if (b.getAttribute('onclick').includes('true')) b.classList.add('show-answer');
+      });
+    }
+    exp.classList.add('show');
+    answered++;
+    updateScore();
+  }
+
+  function revealBlank(el) {
+    el.textContent = el.dataset.ans;
+    el.classList.add('revealed');
+  }
+
+  function revealAll(qid) {
+    document.getElementById(qid).querySelectorAll('.blank').forEach(function(b){
+      b.textContent = b.dataset.ans;
+      b.classList.add('revealed');
+    });
+  }
+
+  function showResult() {
+    var ra = document.getElementById('resultArea');
+    ra.classList.add('show');
+    document.getElementById('resultScore').textContent = correct + ' / ' + total + '点';
+    var pct = Math.round(correct / total * 100);
+    var msg = pct >= 90 ? '🎉 優秀！完璧に近い理解です！' :
+              pct >= 70 ? '👍 よくできています！復習でさらに完璧に。' :
+              pct >= 50 ? '📚 もう一度解説を確認しましょう。' :
+                          '📖 解説をじっくり読み直して再挑戦！';
+    document.getElementById('resultMsg').textContent = pct + '%正解　' + msg;
+  }
+
+  function restart() { location.reload(); }
+</script>
+</body>
+</html>
