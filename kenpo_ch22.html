@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GAMBA憲法 第22章 国会③</title>
+<style>
+  :root {
+    --navy: #1B2A4A;
+    --crimson: #C0392B;
+    --gold: #D4A017;
+    --light-bg: #F4F6F9;
+    --white: #FFFFFF;
+    --text: #2C3E50;
+    --border: #DDE3ED;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Meiryo', 'メイリオ', 'MS PGothic', sans-serif;
+    background: var(--light-bg);
+    color: var(--text);
+    line-height: 1.8;
+  }
+  .header {
+    background: var(--navy);
+    color: var(--white);
+    padding: 24px 20px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    background: rgba(192,57,43,0.15);
+    border-radius: 50%;
+  }
+  .chapter-label { font-size: 13px; letter-spacing: 3px; color: #8FA8CC; margin-bottom: 6px; }
+  .chapter-title { font-size: 26px; font-weight: bold; letter-spacing: 2px; margin-bottom: 8px; }
+  .chapter-title span { color: var(--crimson); }
+  .chapter-sub { font-size: 13px; color: #8FA8CC; letter-spacing: 1px; }
+  .progress-bar {
+    background: #2D3F60;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    color: #8FA8CC;
+  }
+  .progress-track { flex: 1; height: 4px; background: #3D5070; border-radius: 2px; }
+  .progress-fill { height: 100%; width: 79%; background: var(--crimson); border-radius: 2px; }
+  .container { max-width: 800px; margin: 0 auto; padding: 20px 16px 60px; }
+
+  .section { background: var(--white); border-radius: 10px; margin-bottom: 20px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .section-header {
+    background: var(--navy);
+    color: var(--white);
+    padding: 12px 18px;
+    font-size: 15px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-header .num {
+    background: var(--crimson);
+    color: white;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: bold; flex-shrink: 0;
+  }
+  .section-body { padding: 18px; }
+
+  .article-box {
+    background: #EEF2F8;
+    border-left: 4px solid var(--navy);
+    border-radius: 0 6px 6px 0;
+    padding: 12px 15px;
+    margin-bottom: 16px;
+    font-size: 14px;
+  }
+  .article-box .art-num { font-weight: bold; color: var(--navy); font-size: 13px; margin-bottom: 4px; }
+
+  .point-card { border: 2px solid var(--border); border-radius: 8px; margin-bottom: 14px; overflow: hidden; }
+  .point-card-title { background: #EEF2F8; padding: 8px 14px; font-size: 13px; font-weight: bold; color: var(--navy); border-bottom: 1px solid var(--border); }
+  .point-card-body { padding: 12px 14px; font-size: 14px; }
+
+  .kw { color: var(--crimson); font-weight: bold; }
+  .kw-blue { color: var(--navy); font-weight: bold; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 12px 0; }
+  th { background: var(--navy); color: white; padding: 8px 10px; text-align: center; font-weight: bold; }
+  td { padding: 8px 10px; border: 1px solid var(--border); vertical-align: top; line-height: 1.6; }
+  tr:nth-child(even) td { background: #F8FAFC; }
+  .td-label { background: #EEF2F8; font-weight: bold; color: var(--navy); text-align: center; white-space: nowrap; }
+
+  .goryo {
+    background: #FFF8E6;
+    border: 2px solid var(--gold);
+    border-radius: 8px;
+    padding: 12px 15px;
+    margin: 12px 0;
+    font-size: 14px;
+  }
+  .goryo-title { font-size: 12px; color: var(--gold); font-weight: bold; margin-bottom: 6px; letter-spacing: 1px; }
+  .goryo-main { font-size: 17px; font-weight: bold; color: #7D5A00; letter-spacing: 1px; margin-bottom: 4px; }
+  .goryo-sub { font-size: 12px; color: #8B6914; }
+
+  .caution {
+    background: #FFF0EE;
+    border-left: 4px solid var(--crimson);
+    border-radius: 0 6px 6px 0;
+    padding: 10px 14px;
+    margin: 10px 0;
+    font-size: 13px;
+  }
+  .caution-title { font-weight: bold; color: var(--crimson); margin-bottom: 4px; }
+
+  .info {
+    background: #EEF2F8;
+    border-left: 4px solid var(--navy);
+    border-radius: 0 6px 6px 0;
+    padding: 10px 14px;
+    margin: 10px 0;
+    font-size: 13px;
+  }
+
+  .summary-box {
+    background: var(--navy);
+    color: white;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  .summary-box ul { padding-left: 18px; line-height: 2; }
+  .summary-box li::marker { color: var(--crimson); }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 12px 0; }
+  @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+  .col-box { background: #F0F4FA; border-radius: 8px; padding: 12px 14px; font-size: 13px; }
+  .col-box-title { font-weight: bold; color: var(--navy); margin-bottom: 6px; font-size: 13px; border-bottom: 2px solid var(--crimson); padding-bottom: 4px; }
+
+  .mini-test {
+    background: #F0F4FA;
+    border: 2px solid var(--navy);
+    border-radius: 10px;
+    margin-top: 18px;
+    overflow: hidden;
+  }
+  .mini-test-header {
+    background: var(--navy);
+    color: white;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .mini-test-body { padding: 14px; }
+  .mq { margin-bottom: 14px; font-size: 14px; }
+  .mq-text { margin-bottom: 8px; line-height: 1.9; }
+  .mq-num { font-weight: bold; color: var(--navy); margin-right: 4px; }
+  .mb {
+    display: inline-block;
+    min-width: 70px;
+    border-bottom: 2px solid var(--navy);
+    color: transparent;
+    background: #DDE3ED;
+    border-radius: 3px;
+    padding: 1px 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: bold;
+    font-size: 14px;
+    vertical-align: middle;
+    user-select: none;
+  }
+  .mb.open {
+    color: var(--crimson);
+    background: #FFF0EE;
+    border-bottom-color: var(--crimson);
+  }
+  .mini-reveal-btn {
+    display: inline-block;
+    background: var(--navy);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 16px;
+    font-size: 12px;
+    cursor: pointer;
+    font-family: inherit;
+    margin-top: 4px;
+  }
+  .mini-reveal-btn:hover { background: #2D4070; }
+  .footer { background: var(--navy); color: #8FA8CC; text-align: center; padding: 16px; font-size: 12px; margin-top: 30px; }
+
+  .badge-ok { display: inline-block; background: #E8F8F0; color: #27AE60; border: 1px solid #A8DFC4; border-radius: 6px; padding: 1px 8px; font-size: 11px; font-weight: bold; }
+  .badge-ng { display: inline-block; background: #FFF0EE; color: var(--crimson); border: 1px solid #F5C6BF; border-radius: 6px; padding: 1px 8px; font-size: 11px; font-weight: bold; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="chapter-label">GAMBA 憲法 ▶ 第22章</div>
+  <div class="chapter-title">国会 <span>③</span></div>
+  <div class="chapter-sub">立法手続・条約承認・弾劾裁判所・財政監督</div>
+</div>
+
+<div class="progress-bar">
+  <span>22/28</span>
+  <div class="progress-track"><div class="progress-fill"></div></div>
+  <span>79%</span>
+</div>
+
+<div class="container">
+
+  <!-- セクション1: 立法手続 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="num">1</div>
+      立法手続（法律の成立）
+    </div>
+    <div class="section-body">
+
+      <p style="font-size:14px; margin-bottom:14px">国会は「唯一の立法機関」（41条）として法律を制定します。法律の成立までの手続きを整理しましょう。</p>
+
+      <div class="point-card">
+        <div class="point-card-title">法律案の提出・審議・議決</div>
+        <div class="point-card-body">
+          <table>
+            <tr><th>段階</th><th>内容</th><th>注意点</th></tr>
+            <tr>
+              <td class="td-label">提出権者</td>
+              <td>①<span class="kw">議員</span>（衆院50人以上・参院20人以上。予算を伴う場合は各院の規則による）<br>②<span class="kw">内閣</span>（72条・内閣法5条）</td>
+              <td>内閣提出法案（閣法）が多数を占める</td>
+            </tr>
+            <tr>
+              <td class="td-label">審議</td>
+              <td>委員会中心主義。本会議の前に委員会で実質審査</td>
+              <td>公聴会・参考人招致も可</td>
+            </tr>
+            <tr>
+              <td class="td-label">議決</td>
+              <td>両院で可決→成立（59条1項）<br>衆院可決→参院で異なる議決→<span class="kw">両院協議会</span>（任意）→成立せず→<span class="kw">衆院再可決</span>（出席3/2以上）で成立（59条2項）</td>
+              <td>参院が60日以内に議決しないときは衆院が「否決」とみなせる（59条4項）</td>
+            </tr>
+          </table>
+
+          <div class="goryo">
+            <div class="goryo-title">🎵 語呂合わせ：衆院再可決の要件</div>
+            <div class="goryo-main">「サン（参院否決）→ロク（出席3/2）で再可決」</div>
+            <div class="goryo-sub">参議院で否決→衆議院で出席議員の3分の2以上の賛成→法律成立</div>
+          </div>
+
+          <div class="caution">
+            <div class="caution-title">⚠ 「総議員」ではなく「出席議員」</div>
+            再可決は<span class="kw">出席議員の3分の2以上</span>。憲法改正の発議「総議員の3分の2以上」と混同しないこと。
+          </div>
+        </div>
+      </div>
+
+      <div class="point-card">
+        <div class="point-card-title">法律の公布・施行</div>
+        <div class="point-card-body">
+          <table>
+            <tr><th>用語</th><th>意味</th><th>担当</th></tr>
+            <tr>
+              <td class="td-label">奏上</td>
+              <td>成立した法律を内閣から天皇に送付</td>
+              <td>内閣</td>
+            </tr>
+            <tr>
+              <td class="td-label">公布</td>
+              <td>天皇が<span class="kw">官報</span>で国民に知らせる（7条1号）</td>
+              <td>天皇（国事行為）</td>
+            </tr>
+            <tr>
+              <td class="td-label">施行</td>
+              <td>法律の効力が発生すること</td>
+              <td>公布から原則<span class="kw">20日後</span>（法の適用通則法2条）</td>
+            </tr>
+          </table>
+          <div class="caution">
+            <div class="caution-title">⚠ 天皇に法律案の「拒否権」はない</div>
+            天皇は形式的・儀礼的に公布するのみ。実質的に拒否する権限はない（3条・4条）。
+          </div>
+        </div>
+      </div>
+
+      <div class="point-card">
+        <div class="point-card-title">衆議院の優越：法律案のまとめ</div>
+        <div class="point-card-body">
+          <table>
+            <tr><th>事項</th><th>衆院優越の内容</th></tr>
+            <tr>
+              <td class="td-label">法律案（59条）</td>
+              <td>参院否決・60日みなし否決後→両院協議会（任意）→衆院で<span class="kw">出席3/2以上</span>で再可決→成立</td>
+            </tr>
+            <tr>
+              <td class="td-label">予算（60条）</td>
+              <td>衆院先議。参院が30日以内に議決しない→<span class="kw">衆院の議決</span>が国会の議決（両院協議会も必要）</td>
+            </tr>
+            <tr>
+              <td class="td-label">条約承認（61条）</td>
+              <td>予算に準じる（30日みなし可決・両院協議会必要）</td>
+            </tr>
+            <tr>
+              <td class="td-label">内閣総理大臣の指名（67条）</td>
+              <td>10日以内に参院が議決しない→衆院の議決が国会の議決（両院協議会必要）</td>
+            </tr>
+          </table>
+          <div class="goryo">
+            <div class="goryo-title">🎵 語呂合わせ：みなし可決の日数</div>
+            <div class="goryo-main">「予算・条約は30日、首相指名は10日、法律は60日」</div>
+            <div class="goryo-sub">「サン（30）ジュウ→予算・条約」「ジュウ（10）→首相」「ロク（60）→法律」</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ミニテスト1 -->
+      <div class="mini-test">
+        <div class="mini-test-header">✏️ ミニテスト — 立法手続</div>
+        <div class="mini-test-body">
+          <div class="mq">
+            <div class="mq-text"><span class="mq-num">1.</span>法律案の衆議院再可決に必要な賛成は<span class="mb" onclick="this.classList.toggle('open')">出席議員の3分の2</span>以上。「総議員」では<span class="mb" onclick="this.classList.toggle('open')">ない</span>。</div>
+          </div>
+          <div class="mq">
+            <div class="mq-text"><span class="mq-num">2.</span>法律の公布は<span class="mb" onclick="this.classList.toggle('open')">天皇</span>の国事行為であり、<span class="mb" onclick="this.classList.toggle('open')">官報</span>で行われる。</div>
+          </div>
+          <div class="mq">
+            <div class="mq-text"><span class="mq-num">3.</span>参議院が法律案を受け取ってから<span class="mb" onclick="this.classList.toggle('open')">60日</span>以内に議決しない場合、衆議院は「否決」とみなすことができる。</div>
+          </div>
+          <div class="mq">
+            <div class="mq-text"><span class="mq-num">4.</span>条約の承認について、参議院が<span class="mb" onclick="this.classList.toggle('open')">30日</span>以内に議決しないとき、衆議院の議決が国会の議決となる。</div>
+          </div>
+          <button class="mini-reveal-btn" onclick="(function(btn){btn.closest('.mini-test').querySelectorAll('.mb').forEach(function(b){b.classList.add('open')});btn.style.display='none'})(this)">全て表示</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- セクション2: 条約承認権 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="num">2</div>
+      条約の締結と国会の承認（61条・73条3号）
+    </div>
+    <div class="section-body">
+
+      <div class="point-card">
+        <div class="point-card-title">条約の締結手続</div>
+        <div class="point-card-body">
+          <div class="article-box">
+            <div class="art-num">憲法73条3号</div>
+            内閣は、条約を締結すること。但し、事前に、時宜によっては事後に、国会の<strong>承認</strong>を経ることを必要とする。
+          </div>
+
+          <table>
+            <tr><th>担当機関</th><th>役割</th></tr>
+            <tr>
+              <td class="td-label">内閣</td>
+              <td><span class="kw">条約の締結権</span>を持つ（外交権の行使）</td>
+            </tr>
+            <tr>
+              <td class="td-label">国会</td>
+              <td>事前または事後に<span class="kw">承認</span>する（民主的コントロール）</td>
+            </tr>
+            <tr>
+              <td class="td-label">天皇</td>
+              <td>批准書その他の外交文書の<span class="kw">認証</span>（7条8号）</td>
+            </tr>
+          </table>
+
+          <div class="info">
+            <strong>「事前」と「事後」</strong><br>
+            原則は<span class="kw">事前承認</span>。緊急または時宜によっては事後承認も可。事後承認を得られなかった場合の条約の効力は<span class="kw">学説上争い</span>がある（無効説・有効説）。
+          </div>
+        </div>
+      </div>
+
+      <div class="point-card">
+        <div class="point-card-title">条約と法律の効力関係</div>
+        <div class="point-card-body">
+          <p style="margin-bottom:10px">条約と法律のどちらが優先するかは<span class="kw">学説上争い</span>がある。</p>
+          <div class="two-col">
+            <div class="col-box">
+              <div class="col-box-title">条約優位説（通説）</div>
+              条約は国際法上の義務であり、国家の信義則から法律より上位。違憲審査の対象となるかは別問題。
+            </div>
+            <div class="col-box">
+              <div class="col-box-title">法律優位説（少数説）</div>
+              憲法98条2項は「誠実に遵守」とあるが、国内的には法律と同等。国内法として扱う。
+            </div>
+          </div>
+          <div class="caution">
+            <div class="caution-title">⚠ 条約の違憲審査</div>
+            砂川事件（最大判昭34）は、日米安保条約のような<span class="kw">高度な政治性を有する条約</span>は、一見極めて明白に違憲無効と認められない限り、<span class="kw">司法審査の対象外</span>とした（統治行為論）。
+          </div>
+        </div>
+      </div>
+
+      <!-- ミニテスト2 -->
+      <div class="mini-test">
+        <div class="mini-test-header">✏️ ミニテスト — 条約承認</div>
+        <div class="mini-test-body">
+          <div class="mq">
+            <div class="mq-text"><span class="mq-num">1.</span>条約の締結権は<span class="mb" onclick="this.classList.toggle('open')">内閣</span>が持ち、国会は<span class="mb" onclick="this.classList.toggle('open')">承認</span>する。天皇は批准書等を<span class="mb" onclick="this.classList.toggle('open')">認証</span>する。</div>
+          </div>
+          <div class="mq">
+            <div class="mq-text"><span class="mq-num">2.</span>条約承認の議決：参議院が<span class="mb" onclick="this.classList.toggle('open')">30日</span>以内に議決しないとき、衆議院の議決が国会の議決となる。この場合<span class="mb" onclick="this.classList.toggle('open')">両院協議会</span>の開催が必要。</div>
+          </div>
+          <div class="mq">
+            <div class="mq-text"><span class="mq-num">3.</span>砂川事件で最高裁は、高度な政治性を持つ条約は<span class="mb" onclick="this.classList.toggle('open')">統治行為</span>として原則として司法審査の対象外とした。</div>
+          </div>
+          <button class="mini-reveal-btn" onclick="(function(btn){btn.closest('.mini-test').querySelectorAll('.mb').forEach(function(b){b.classList.add('open')});btn.style.display='none'})(this)">全て表示</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- セクション3: 弾劾裁判所 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="num">3</div>
+      弾劾裁判所（64条）
+    </div>
+    <div class="section-body">
+
+      <div class="article-box">
+        <div class="art-num">憲法64条</div>
+        国会は、罷免の訴追を受けた裁判官を裁判するため、両議院の議員で組織する<strong>弾劾裁判所</strong>を設ける。② 弾劾に関する事項は、法律でこれを定める。
+      </div>
+
+      <div class="point-card">
+        <div class="point-card-title">弾劾裁判所の概要</div>
+        <div class="point-card-body">
+          <table>
+            <tr><th>項目</th><th>内容</th></tr>
+            <tr>
+              <td class="td-label">目的</td>
+              <td>裁判官を<span class="kw">罷免</span>するための特別裁判所</td>
+            </tr>
+            <tr>
+              <td class="td-label">組織</td>
+              <td>両議院の議員で組織（衆参各7名の計14名）</td>
+            </tr>
+            <tr>
+              <td class="td-label">訴追機関</td>
+              <td><span class="kw">裁判官訴追委員会</span>（両議院の議員で組織）</td>
+            </tr>
+            <tr>
+              <td class="td-label">罷免事由</td>
+              <td>①職務上の義務違反・怠慢<br>②裁判官としての<span class="kw">威信を著しく失うべき非行</span></td>
+            </tr>
+            <tr>
+              <td class="td-label">判決の効力</td>
+              <td>罷免の判決が確定→<span class="kw">公民権停止</span>（裁判官弾劾法37条）</td>
+            </tr>
+            <tr>
+              <td class="td-label">不服申立て</td>
+              <td>弾劾裁判所の裁判に対して<span class="kw">他の裁判所に不服申立て不可</span>（議院自律権）</td>
+            </tr>
+          </table>
+
+          <div class="caution">
+            <div class="caution-title">⚠ 弾劾裁判所 ≠ 通常の裁判所</div>
+            弾劾裁判所は<span class="kw">特別裁判所</span>の一種だが、憲法76条2項「特別裁判所を設置してはならない」の例外として<span class="kw">64条が明文で認めた</span>もの。
+          </div>
+
+          <div class="info">
+            <strong>復権の申立て</strong><br>
+            罷免された裁判官は、<span class="kw">弾劾裁判所</span>に対して復権の裁判を請求できる（裁判官弾劾法38条）。
+          </div>
+        </div>
+      </div>
+
+      <!-- ミニテスト3 -->
+      <div class="mini-test">
+        <div class="mini-test-header">✏️ ミニテスト — 弾劾裁判所</div>
+        <div class="mini-test-body">
+          <div class="mq">
+            <div class="mq-text"><span class="mq-num">1.</span>弾劾裁判所は<span class="mb" onclick="this.classList.toggle('open')">両議院の議員</span>で組織される。訴追機関は<span class="mb" onclick="this.classList.toggle('open')">裁判官訴追委員会</span>。</div>
+          </div>
+          <div class="mq">
+            <div class="mq-text"><span class="mq-num">2.</span>弾劾裁判所は憲法76条2項の「特別裁判所禁止」の例外として<span class="mb" onclick="this.classList.toggle('open')">64条</span>が明文で認めたもの。</div>
+          </div>
+          <div class="mq">
+            <div class="mq-text"><span class="mq-num">3.</span>弾劾裁判所の裁判に対しては他の裁判所への不服申立ては<span class="mb" onclick="this.classList.toggle('open')">できない</span>。ただし罷免された裁判官は<span class="mb" onclick="this.classList.toggle('open')">復権</span>の申立てができる。</div>
+          </div>
+          <button class="mini-reveal-btn" onclick="(function(btn){btn.closest('.mini-test').querySelectorAll('.mb').forEach(function(b){b.classList.add('open')});btn.style.display='none'})(this)">全て表示</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- セクション4: 国会の財政監督権 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="num">4</div>
+      国会の財政監督権・その他の権能
+    </div>
+    <div class="section-body">
+
+      <div class="point-card">
+        <div class="point-card-title">財政に関する国会の権能</div>
+        <div class="point-card-body">
+          <table>
+            <tr><th>権能</th><th>根拠条文</th><th>内容</th></tr>
+            <tr>
+              <td class="td-label">予算の審議・議決</td>
+              <td>60条</td>
+              <td>衆院先議。参院が30日以内に議決しない→衆院の議決が国会の議決</td>
+            </tr>
+            <tr>
+              <td class="td-label">租税法律主義</td>
+              <td>84条</td>
+              <td>新たに租税を課し又は現行の租税を変更するには<span class="kw">法律</span>の根拠が必要</td>
+            </tr>
+            <tr>
+              <td class="td-label">予備費の事後承諾</td>
+              <td>87条</td>
+              <td>内閣が支出した予備費は<span class="kw">事後</span>に国会の承諾が必要</td>
+            </tr>
+            <tr>
+              <td class="td-label">決算の審査</td>
+              <td>90条</td>
+              <td>会計検査院が検査→内閣が国会に提出→<span class="kw">国会が審議</span></td>
+            </tr>
+            <tr>
+              <td class="td-label">財政状況の報告</td>
+              <td>91条</td>
+              <td>内閣は定期的に国会・国民に財政状況を<span class="kw">報告</span>する義務</td>
+            </tr>
+          </table>
+
+          <div class="caution">
+            <div class="caution-title">⚠ 予算の修正</div>
+            国会は予算を<span class="kw">修正</span>できるか？通説は、増額修正（増加修正）は内閣の予算提案権を害しない限り可能とする。<span class="kw">政府原案を超える大幅増額</span>は内閣の予算提案権（73条5号）を侵害し許されないとする見解が有力。
+          </div>
+        </div>
+      </div>
+
+      <div class="point-card">
+        <div class="point-card-title">国会のその他の権能</div>
+        <div class="point-card-body">
+          <table>
+            <tr><th>権能</th><th>根拠</th><th>ポイント</th></tr>
+            <tr>
+              <td class="td-label">憲法改正の発議</td>
+              <td>96条</td>
+              <td>各院の<span class="kw">総議員の3分の2以上</span>→国民投票（過半数賛成）→成立</td>
+            </tr>
+            <tr>
+              <td class="td-label">内閣総理大臣の指名</td>
+              <td>67条</td>
+              <td>国会議員の中から<span class="kw">議決</span>で指名（選挙ではなく議決）</td>
+            </tr>
+            <tr>
+              <td class="td-label">内閣不信任決議</td>
+              <td>69条</td>
+              <td><span class="kw">衆議院のみ</span>が有する権能。可決→10日以内に解散か総辞職</td>
+            </tr>
+            <tr>
+              <td class="td-label">国務大臣の訴追同意</td>
+              <td>75条</td>
+              <td>在職中の国務大臣を訴追するには<span class="kw">内閣総理大臣の同意</span>が必要（国会の権能ではないが関連知識）</td>
+            </tr>
+          </table>
+
+          <div class="goryo">
+            <div class="goryo-title">🎵 語呂合わせ：憲法改正の発議要件</div>
+            <div class="goryo-main">「総（総議員）・サン（3分の2）で発議→国民投票で過半数」</div>
+            <div class="goryo-sub">「出席」ではなく「総議員」の3分の2以上が必要</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ミニテスト4 -->
+      <div class="mini-test">
+        <div class="mini-test-header">✏️ ミニテスト — 財政監督・その他権能</div>
+        <div class="mini-test-body">
+          <div class="mq">
+            <div class="mq-text"><span class="mq-num">1.</span>新たに租税を課すには<span class="mb" onclick="this.classList.toggle('open')">法律</span>の根拠が必要（<span class="mb" onclick="this.classList.toggle('open')">84</span>条・租税法律主義）。</div>
+          </div>
+          <div class="mq">
+            <div class="mq-text"><span class="mq-num">2.</span>内閣が支出した予備費は、<span class="mb" onclick="this.classList.toggle('open')">事後</span>に国会の<span class="mb" onclick="this.classList.toggle('open')">承諾</span>が必要（87条）。</div>
+          </div>
+          <div class="mq">
+            <div class="mq-text"><span class="mq-num">3.</span>憲法改正の発議には各院の<span class="mb" onclick="this.classList.toggle('open')">総議員の3分の2</span>以上の賛成が必要。「出席議員」では<span class="mb" onclick="this.classList.toggle('open')">ない</span>。</div>
+          </div>
+          <div class="mq">
+            <div class="mq-text"><span class="mq-num">4.</span>内閣不信任決議は<span class="mb" onclick="this.classList.toggle('open')">衆議院のみ</span>が行うことができる。</div>
+          </div>
+          <button class="mini-reveal-btn" onclick="(function(btn){btn.closest('.mini-test').querySelectorAll('.mb').forEach(function(b){b.classList.add('open')});btn.style.display='none'})(this)">全て表示</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- まとめ -->
+  <div class="summary-box">
+    <strong style="font-size:15px; letter-spacing:1px">📌 第22章 最重要まとめ</strong>
+    <ul>
+      <li>法律案の再可決：<strong>出席議員の3分の2以上</strong>（総議員ではない）</li>
+      <li>参院みなし否決の日数：法律60日・予算30日・条約30日・首相指名10日</li>
+      <li>条約の締結は<strong>内閣</strong>、国会は<strong>承認</strong>（原則事前・例外事後）</li>
+      <li>砂川事件：高度の政治性を持つ条約は<strong>統治行為</strong>として司法審査の対象外</li>
+      <li>弾劾裁判所：<strong>両議院の議員</strong>で組織。76条2項の例外として<strong>64条</strong>が明文規定</li>
+      <li>租税法律主義（84条）・予備費の事後承諾（87条）・決算審査（90条）</li>
+      <li>憲法改正の発議：<strong>総議員の3分の2以上</strong>→<strong>国民投票</strong>（過半数）</li>
+    </ul>
+  </div>
+
+</div>
+
+<div class="footer">GAMBA憲法 第22章 国会③ ｜ 江原予備校</div>
+</body>
+</html>

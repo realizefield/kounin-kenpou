@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GAMBA憲法 第22章 演習 国会③</title>
+<style>
+  :root {
+    --navy: #1B2A4A;
+    --crimson: #C0392B;
+    --gold: #D4A017;
+    --green: #27AE60;
+    --light-bg: #F4F6F9;
+    --white: #FFFFFF;
+    --text: #2C3E50;
+    --border: #DDE3ED;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Meiryo', 'メイリオ', 'MS PGothic', sans-serif;
+    background: var(--light-bg);
+    color: var(--text);
+    line-height: 1.8;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .header { background: var(--navy); color: white; padding: 20px; text-align: center; }
+  .header-label { font-size: 12px; color: #8FA8CC; letter-spacing: 3px; margin-bottom: 4px; }
+  .header-title { font-size: 22px; font-weight: bold; letter-spacing: 2px; }
+  .header-title span { color: var(--crimson); }
+  .score-bar { background: #2D3F60; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: #8FA8CC; }
+  .score-display { color: white; font-weight: bold; font-size: 16px; }
+  .container { max-width: 800px; margin: 0 auto; padding: 20px 16px 80px; }
+
+  .q-card { background: var(--white); border-radius: 10px; margin-bottom: 20px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .q-header { background: var(--navy); color: white; padding: 10px 16px; display: flex; justify-content: space-between; align-items: center; }
+  .q-num { font-size: 13px; font-weight: bold; letter-spacing: 1px; }
+  .q-tag { font-size: 11px; background: rgba(255,255,255,0.15); padding: 2px 8px; border-radius: 10px; }
+  .q-body { padding: 16px; }
+  .q-text { font-size: 14px; margin-bottom: 14px; line-height: 1.9; }
+
+  .blank { display: inline-block; min-width: 60px; border-bottom: 2px solid var(--navy); color: transparent; background: #EEF2F8; border-radius: 3px; padding: 0 4px; cursor: pointer; transition: all 0.2s; font-weight: bold; font-size: 14px; vertical-align: middle; }
+  .blank.revealed { color: var(--crimson); background: #FFF0EE; border-bottom-color: var(--crimson); }
+
+  .choices { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+  .choice-btn { background: #F0F4FA; border: 2px solid var(--border); border-radius: 8px; padding: 10px 14px; font-size: 14px; text-align: left; cursor: pointer; transition: all 0.2s; color: var(--text); font-family: inherit; line-height: 1.6; }
+  .choice-btn:hover { background: #E4EBF5; border-color: var(--navy); }
+  .choice-btn.correct { background: #E8F8F0; border-color: var(--green); color: var(--green); font-weight: bold; }
+  .choice-btn.wrong { background: #FFF0EE; border-color: var(--crimson); color: var(--crimson); text-decoration: line-through; }
+  .choice-btn.show-answer { background: #E8F8F0; border-color: var(--green); color: var(--green); font-weight: bold; }
+  .choice-btn:disabled { cursor: default; }
+
+  .ox-buttons { display: flex; gap: 10px; margin-bottom: 14px; }
+  .ox-btn { flex: 1; padding: 14px; font-size: 22px; border: 2px solid var(--border); border-radius: 8px; cursor: pointer; background: #F0F4FA; transition: all 0.2s; font-family: inherit; }
+  .ox-btn:hover { background: #E4EBF5; }
+  .ox-btn.correct { background: #E8F8F0; border-color: var(--green); }
+  .ox-btn.wrong { background: #FFF0EE; border-color: var(--crimson); }
+  .ox-btn:disabled { cursor: default; }
+
+  .explanation { display: none; background: #F8FAFC; border-left: 4px solid var(--navy); border-radius: 0 6px 6px 0; padding: 12px 14px; font-size: 13px; line-height: 1.8; margin-top: 6px; }
+  .explanation.show { display: block; }
+  .exp-correct { border-left-color: var(--green); }
+  .exp-wrong { border-left-color: var(--crimson); }
+  .exp-label { font-weight: bold; margin-bottom: 4px; font-size: 12px; letter-spacing: 1px; }
+  .exp-correct .exp-label { color: var(--green); }
+  .exp-wrong .exp-label { color: var(--crimson); }
+  .kw { color: var(--crimson); font-weight: bold; }
+
+  .fill-area { background: #F0F4FA; border-radius: 8px; padding: 14px; margin-bottom: 12px; font-size: 14px; line-height: 2.2; }
+  .fill-reveal-btn { background: var(--navy); color: white; border: none; border-radius: 6px; padding: 8px 18px; font-size: 13px; cursor: pointer; font-family: inherit; margin-top: 8px; }
+  .fill-reveal-btn:hover { background: #2D4070; }
+
+  .result-area { display: none; background: var(--navy); color: white; border-radius: 10px; padding: 24px; text-align: center; margin-top: 20px; }
+  .result-area.show { display: block; }
+  .result-score { font-size: 40px; font-weight: bold; color: var(--gold); margin: 10px 0; }
+  .result-msg { font-size: 16px; margin-bottom: 16px; }
+  .restart-btn { background: var(--crimson); color: white; border: none; border-radius: 8px; padding: 12px 30px; font-size: 15px; cursor: pointer; font-family: inherit; }
+
+  .footer { background: var(--navy); color: #8FA8CC; text-align: center; padding: 14px; font-size: 12px; margin-top: 30px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-label">GAMBA 憲法 ▶ 第22章 演習</div>
+  <div class="header-title">国会 <span>③</span></div>
+</div>
+
+<div class="score-bar">
+  <span>全12問</span>
+  <span class="score-display" id="scoreDisplay">0 / 0</span>
+  <span id="progressText">0%</span>
+</div>
+
+<div class="container">
+
+  <!-- Q1 -->
+  <div class="q-card" id="q1">
+    <div class="q-header"><span class="q-num">Q1</span><span class="q-tag">立法手続 ○×</span></div>
+    <div class="q-body">
+      <div class="q-text">法律案について衆議院が可決し、参議院がこれと異なる議決をした場合、衆議院で出席議員の3分の2以上の多数で再び可決したときは法律となる。</div>
+      <div class="ox-buttons">
+        <button class="ox-btn" onclick="answerOX('q1',true,this)">○</button>
+        <button class="ox-btn" onclick="answerOX('q1',false,this)">×</button>
+      </div>
+      <div class="explanation" id="exp-q1">
+        <div class="exp-label">✓ 正しい</div>
+        憲法59条2項の規定通り。「<span class="kw">出席議員</span>の3分の2以上」である点に注意。憲法改正発議の「<span class="kw">総議員の3分の2以上</span>」と混同しないこと。
+      </div>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-card" id="q2">
+    <div class="q-header"><span class="q-num">Q2</span><span class="q-tag">立法手続 ○×</span></div>
+    <div class="q-body">
+      <div class="q-text">法律案の衆議院による再可決には両院協議会の開催が義務づけられており、両院協議会を経ずに衆議院が単独で再可決することはできない。</div>
+      <div class="ox-buttons">
+        <button class="ox-btn" onclick="answerOX('q2',false,this)">○</button>
+        <button class="ox-btn" onclick="answerOX('q2',true,this)">×</button>
+      </div>
+      <div class="explanation" id="exp-q2">
+        <div class="exp-label">✗ 誤り</div>
+        法律案については両院協議会の開催は<span class="kw">任意</span>（59条3項）。開催しなくても衆議院が単独で再可決できる。予算・条約・首相指名は<span class="kw">必要的</span>（義務的）両院協議会であることと区別すること。
+      </div>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-card" id="q3">
+    <div class="q-header"><span class="q-num">Q3</span><span class="q-tag">立法手続 ○×</span></div>
+    <div class="q-body">
+      <div class="q-text">参議院が法律案を受け取った後、国会休会中の期間を除いて60日以内に議決しない場合、衆議院はこれを参議院が否決したものとみなすことができる。</div>
+      <div class="ox-buttons">
+        <button class="ox-btn" onclick="answerOX('q3',true,this)">○</button>
+        <button class="ox-btn" onclick="answerOX('q3',false,this)">×</button>
+      </div>
+      <div class="explanation" id="exp-q3">
+        <div class="exp-label">✓ 正しい</div>
+        憲法59条4項の規定通り。「みなすことが<span class="kw">できる</span>」（任意）であり、「みなさなければならない」（義務）ではない点にも注意。
+      </div>
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-card" id="q4">
+    <div class="q-header"><span class="q-num">Q4</span><span class="q-tag">法律の公布 ○×</span></div>
+    <div class="q-body">
+      <div class="q-text">天皇は、国会が成立させた法律について、内容が憲法に違反すると判断した場合には、公布を拒否することができる。</div>
+      <div class="ox-buttons">
+        <button class="ox-btn" onclick="answerOX('q4',false,this)">○</button>
+        <button class="ox-btn" onclick="answerOX('q4',true,this)">×</button>
+      </div>
+      <div class="explanation" id="exp-q4">
+        <div class="exp-label">✗ 誤り</div>
+        天皇は<span class="kw">形式的・儀礼的</span>に公布するのみ（3条・4条・7条1号）。<span class="kw">実質的な審査・拒否権はない</span>。天皇の国事行為はすべて内閣の助言と承認を必要とし、内閣がその責任を負う。
+      </div>
+    </div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-card" id="q5">
+    <div class="q-header"><span class="q-num">Q5</span><span class="q-tag">条約承認 ○×</span></div>
+    <div class="q-body">
+      <div class="q-text">憲法73条3号は条約の締結について「事前に、時宜によっては事後に、国会の承認を経ることを必要とする」と規定しており、事後承認によることは例外的に認められるにすぎない。</div>
+      <div class="ox-buttons">
+        <button class="ox-btn" onclick="answerOX('q5',true,this)">○</button>
+        <button class="ox-btn" onclick="answerOX('q5',false,this)">×</button>
+      </div>
+      <div class="explanation" id="exp-q5">
+        <div class="exp-label">✓ 正しい</div>
+        73条3号の文言通り、<span class="kw">原則は事前承認</span>、「時宜によっては」事後承認が認められる例外的扱い。緊急・やむを得ない場合に限って事後承認が許容される。
+      </div>
+    </div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-card" id="q6">
+    <div class="q-header"><span class="q-num">Q6</span><span class="q-tag">条約・砂川事件 ○×</span></div>
+    <div class="q-body">
+      <div class="q-text">砂川事件において最高裁判所は、日米安全保障条約のような高度の政治性を有する条約は、一見極めて明白に違憲無効と認められない限り、その合憲性の判断は司法裁判所の審査に服しないとした。</div>
+      <div class="ox-buttons">
+        <button class="ox-btn" onclick="answerOX('q6',true,this)">○</button>
+        <button class="ox-btn" onclick="answerOX('q6',false,this)">×</button>
+      </div>
+      <div class="explanation" id="exp-q6">
+        <div class="exp-label">✓ 正しい</div>
+        砂川事件（最大判昭34・12・16）の判示。<span class="kw">統治行為論</span>の典型例。「一見極めて明白に違憲無効と認められない限り」という留保が付いている点も重要。
+      </div>
+    </div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-card" id="q7">
+    <div class="q-header"><span class="q-num">Q7</span><span class="q-tag">弾劾裁判所 ○×</span></div>
+    <div class="q-body">
+      <div class="q-text">弾劾裁判所は両議院の議員で組織されるが、憲法76条2項が「特別裁判所を設置してはならない」と規定しているため、弾劾裁判所の設置は違憲との見解が通説となっている。</div>
+      <div class="ox-buttons">
+        <button class="ox-btn" onclick="answerOX('q7',false,this)">○</button>
+        <button class="ox-btn" onclick="answerOX('q7',true,this)">×</button>
+      </div>
+      <div class="explanation" id="exp-q7">
+        <div class="exp-label">✗ 誤り</div>
+        弾劾裁判所は<span class="kw">64条が明文で認めた</span>特別裁判所の例外。76条2項の「特別裁判所禁止」の例外として憲法自身が設置を認めているため、<span class="kw">合憲</span>である。通説は合憲とする。
+      </div>
+    </div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-card" id="q8">
+    <div class="q-header"><span class="q-num">Q8</span><span class="q-tag">弾劾裁判所 ○×</span></div>
+    <div class="q-body">
+      <div class="q-text">弾劾裁判所の裁判によって罷免された裁判官は、その裁判に不服がある場合、最高裁判所に上訴することができる。</div>
+      <div class="ox-buttons">
+        <button class="ox-btn" onclick="answerOX('q8',false,this)">○</button>
+        <button class="ox-btn" onclick="answerOX('q8',true,this)">×</button>
+      </div>
+      <div class="explanation" id="exp-q8">
+        <div class="exp-label">✗ 誤り</div>
+        弾劾裁判所の裁判に対しては<span class="kw">他の裁判所への不服申立てはできない</span>（議院自律権）。ただし罷免された裁判官は<span class="kw">弾劾裁判所に対して復権の申立て</span>をすることはできる（裁判官弾劾法38条）。
+      </div>
+    </div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="q-card" id="q9">
+    <div class="q-header"><span class="q-num">Q9</span><span class="q-tag">財政監督 ○×</span></div>
+    <div class="q-body">
+      <div class="q-text">憲法84条の租税法律主義により、新たに租税を課し又は現行の租税を変更するには法律の根拠が必要とされ、条例によって地方税を新設することはできない。</div>
+      <div class="ox-buttons">
+        <button class="ox-btn" onclick="answerOX('q9',false,this)">○</button>
+        <button class="ox-btn" onclick="answerOX('q9',true,this)">×</button>
+      </div>
+      <div class="explanation" id="exp-q9">
+        <div class="exp-label">✗ 誤り</div>
+        地方税については<span class="kw">地方税法の授権に基づく条例</span>によって課税できる（地方税法2条・3条）。憲法94条が条例制定権を保障しており、法律の範囲内で条例による地方税の創設は可能。
+      </div>
+    </div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="q-card" id="q10">
+    <div class="q-header"><span class="q-num">Q10</span><span class="q-tag">財政監督 ○×</span></div>
+    <div class="q-body">
+      <div class="q-text">内閣は予見し難い予算の不足に充てるため、国会の議決に基づいて予備費を設けることができるが、その支出については事後に国会の承諾を得ることが必要とされている。</div>
+      <div class="ox-buttons">
+        <button class="ox-btn" onclick="answerOX('q10',true,this)">○</button>
+        <button class="ox-btn" onclick="answerOX('q10',false,this)">×</button>
+      </div>
+      <div class="explanation" id="exp-q10">
+        <div class="exp-label">✓ 正しい</div>
+        憲法87条の規定通り。予備費は<span class="kw">設置に国会議決が必要</span>（事前統制）かつ<span class="kw">支出後に国会の承諾が必要</span>（事後統制）。なお承諾が得られなくても支出の効力には影響しないと解されている。
+      </div>
+    </div>
+  </div>
+
+  <!-- Q11 -->
+  <div class="q-card" id="q11">
+    <div class="q-header"><span class="q-num">Q11</span><span class="q-tag">総合 選択</span></div>
+    <div class="q-body">
+      <div class="q-text">次のうち、衆議院の優越が認められるものとして正しいものの組み合わせはどれか。<br>ア．法律案の再可決<br>イ．予算の先議権<br>ウ．内閣不信任決議<br>エ．憲法改正の発議</div>
+      <div class="choices">
+        <button class="choice-btn" onclick="answerChoice('q11',false,this)">①ア・イ・ウ・エすべて</button>
+        <button class="choice-btn" onclick="answerChoice('q11',true,this)">②ア・イ・ウ</button>
+        <button class="choice-btn" onclick="answerChoice('q11',false,this)">③ア・イ</button>
+        <button class="choice-btn" onclick="answerChoice('q11',false,this)">④イ・ウ・エ</button>
+      </div>
+      <div class="explanation" id="exp-q11">
+        <div class="exp-label">✓ ②が正しい</div>
+        ア法律案再可決（59条2項）・イ予算先議（60条）・ウ内閣不信任（69条）はいずれも衆議院の優越・専権。<br>
+        エ憲法改正の発議は<span class="kw">各院の総議員の3分の2以上</span>が必要で、衆参対等（優越なし）。
+      </div>
+    </div>
+  </div>
+
+  <!-- Q12 穴埋め -->
+  <div class="q-card" id="q12">
+    <div class="q-header"><span class="q-num">Q12</span><span class="q-tag">総合 穴埋め</span></div>
+    <div class="q-body">
+      <div class="q-text">次の文の空欄を埋めなさい（クリックで答えを表示）。</div>
+      <div class="fill-area">
+        法律案の再可決には衆議院の
+        <span class="blank" onclick="revealBlank(this)" data-ans="出席議員">　　　　</span>
+        の3分の2以上の賛成が必要であり、両院協議会の開催は
+        <span class="blank" onclick="revealBlank(this)" data-ans="任意">　　</span>
+        （不要でも可）。<br><br>
+        条約の締結は
+        <span class="blank" onclick="revealBlank(this)" data-ans="内閣">　　</span>
+        の権能であり、国会は
+        <span class="blank" onclick="revealBlank(this)" data-ans="承認">　　</span>
+        を行う。参議院が
+        <span class="blank" onclick="revealBlank(this)" data-ans="30日">　　</span>
+        以内に議決しないとき衆議院の議決が国会の議決となる。<br><br>
+        弾劾裁判所は
+        <span class="blank" onclick="revealBlank(this)" data-ans="両議院の議員">　　　　　</span>
+        で組織され、憲法
+        <span class="blank" onclick="revealBlank(this)" data-ans="64条">　　</span>
+        が明文で認めた特別裁判所の例外である。
+      </div>
+      <button class="fill-reveal-btn" onclick="revealAll('q12')">全て表示</button>
+    </div>
+  </div>
+
+  <!-- 結果 -->
+  <div class="result-area" id="resultArea">
+    <div style="font-size:14px; color:#8FA8CC;">演習完了！</div>
+    <div class="result-score" id="resultScore">--</div>
+    <div class="result-msg" id="resultMsg">--</div>
+    <button class="restart-btn" onclick="restart()">もう一度挑戦</button>
+  </div>
+
+</div>
+
+<div class="footer">GAMBA憲法 第22章 演習 国会③ ｜ 江原予備校</div>
+
+<script>
+  var answered = 0, correct = 0;
+  var total = 11; // 穴埋め除く
+
+  function updateScore() {
+    document.getElementById('scoreDisplay').textContent = correct + ' / ' + answered;
+    var pct = total > 0 ? Math.round(answered / total * 100) : 0;
+    document.getElementById('progressText').textContent = pct + '%';
+    if (answered >= total) showResult();
+  }
+
+  function answerOX(qid, isCorrect, btn) {
+    var card = document.getElementById(qid);
+    var btns = card.querySelectorAll('.ox-btn');
+    btns.forEach(function(b){ b.disabled = true; });
+    var exp = document.getElementById('exp-' + qid);
+    if (isCorrect) {
+      btn.classList.add('correct');
+      exp.classList.add('exp-correct');
+      correct++;
+    } else {
+      btn.classList.add('wrong');
+      exp.classList.add('exp-wrong');
+      btns.forEach(function(b){ if (b !== btn) b.classList.add('correct'); });
+    }
+    exp.classList.add('show');
+    answered++;
+    updateScore();
+  }
+
+  function answerChoice(qid, isCorrect, btn) {
+    var card = document.getElementById(qid);
+    var btns = card.querySelectorAll('.choice-btn');
+    btns.forEach(function(b){ b.disabled = true; });
+    var exp = document.getElementById('exp-' + qid);
+    if (isCorrect) {
+      btn.classList.add('correct');
+      exp.classList.add('exp-correct');
+      correct++;
+    } else {
+      btn.classList.add('wrong');
+      exp.classList.add('exp-wrong');
+      btns.forEach(function(b){
+        if (b.getAttribute('onclick').includes('true')) b.classList.add('show-answer');
+      });
+    }
+    exp.classList.add('show');
+    answered++;
+    updateScore();
+  }
+
+  function revealBlank(el) {
+    el.textContent = el.dataset.ans;
+    el.classList.add('revealed');
+  }
+
+  function revealAll(qid) {
+    document.getElementById(qid).querySelectorAll('.blank').forEach(function(b){
+      b.textContent = b.dataset.ans;
+      b.classList.add('revealed');
+    });
+  }
+
+  function showResult() {
+    var ra = document.getElementById('resultArea');
+    ra.classList.add('show');
+    document.getElementById('resultScore').textContent = correct + ' / ' + total + '点';
+    var pct = Math.round(correct / total * 100);
+    var msg = pct >= 90 ? '🎉 優秀！完璧に近い理解です！' :
+              pct >= 70 ? '👍 よくできています！復習でさらに完璧に。' :
+              pct >= 50 ? '📚 もう一度解説を確認しましょう。' :
+                          '📖 解説をじっくり読み直して再挑戦！';
+    document.getElementById('resultMsg').textContent = pct + '%正解　' + msg;
+  }
+
+  function restart() { location.reload(); }
+</script>
+</body>
+</html>

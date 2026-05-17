@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GAMBA憲法 第23章 演習 内閣</title>
+<style>
+  :root {
+    --navy: #1B2A4A;
+    --crimson: #C0392B;
+    --gold: #D4A017;
+    --green: #27AE60;
+    --light-bg: #F4F6F9;
+    --white: #FFFFFF;
+    --text: #2C3E50;
+    --border: #DDE3ED;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Meiryo', 'メイリオ', 'MS PGothic', sans-serif;
+    background: var(--light-bg);
+    color: var(--text);
+    line-height: 1.8;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .header { background: var(--navy); color: white; padding: 20px; text-align: center; }
+  .header-label { font-size: 12px; color: #8FA8CC; letter-spacing: 3px; margin-bottom: 4px; }
+  .header-title { font-size: 22px; font-weight: bold; letter-spacing: 2px; }
+  .header-title span { color: var(--crimson); }
+  .score-bar { background: #2D3F60; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: #8FA8CC; }
+  .score-display { color: white; font-weight: bold; font-size: 16px; }
+  .container { max-width: 800px; margin: 0 auto; padding: 20px 16px 80px; }
+
+  .q-card { background: var(--white); border-radius: 10px; margin-bottom: 20px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .q-header { background: var(--navy); color: white; padding: 10px 16px; display: flex; justify-content: space-between; align-items: center; }
+  .q-num { font-size: 13px; font-weight: bold; letter-spacing: 1px; }
+  .q-tag { font-size: 11px; background: rgba(255,255,255,0.15); padding: 2px 8px; border-radius: 10px; }
+  .q-body { padding: 16px; }
+  .q-text { font-size: 14px; margin-bottom: 14px; line-height: 1.9; }
+
+  .blank { display: inline-block; min-width: 60px; border-bottom: 2px solid var(--navy); color: transparent; background: #EEF2F8; border-radius: 3px; padding: 0 4px; cursor: pointer; transition: all 0.2s; font-weight: bold; font-size: 14px; vertical-align: middle; }
+  .blank.revealed { color: var(--crimson); background: #FFF0EE; border-bottom-color: var(--crimson); }
+
+  .choices { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+  .choice-btn { background: #F0F4FA; border: 2px solid var(--border); border-radius: 8px; padding: 10px 14px; font-size: 14px; text-align: left; cursor: pointer; transition: all 0.2s; color: var(--text); font-family: inherit; line-height: 1.6; }
+  .choice-btn:hover { background: #E4EBF5; border-color: var(--navy); }
+  .choice-btn.correct { background: #E8F8F0; border-color: var(--green); color: var(--green); font-weight: bold; }
+  .choice-btn.wrong { background: #FFF0EE; border-color: var(--crimson); color: var(--crimson); text-decoration: line-through; }
+  .choice-btn.show-answer { background: #E8F8F0; border-color: var(--green); color: var(--green); font-weight: bold; }
+  .choice-btn:disabled { cursor: default; }
+
+  .ox-buttons { display: flex; gap: 10px; margin-bottom: 14px; }
+  .ox-btn { flex: 1; padding: 14px; font-size: 22px; border: 2px solid var(--border); border-radius: 8px; cursor: pointer; background: #F0F4FA; transition: all 0.2s; font-family: inherit; }
+  .ox-btn:hover { background: #E4EBF5; }
+  .ox-btn.correct { background: #E8F8F0; border-color: var(--green); }
+  .ox-btn.wrong { background: #FFF0EE; border-color: var(--crimson); }
+  .ox-btn:disabled { cursor: default; }
+
+  .explanation { display: none; background: #F8FAFC; border-left: 4px solid var(--navy); border-radius: 0 6px 6px 0; padding: 12px 14px; font-size: 13px; line-height: 1.8; margin-top: 6px; }
+  .explanation.show { display: block; }
+  .exp-correct { border-left-color: var(--green); }
+  .exp-wrong { border-left-color: var(--crimson); }
+  .exp-label { font-weight: bold; margin-bottom: 4px; font-size: 12px; letter-spacing: 1px; }
+  .exp-correct .exp-label { color: var(--green); }
+  .exp-wrong .exp-label { color: var(--crimson); }
+  .kw { color: var(--crimson); font-weight: bold; }
+
+  .fill-area { background: #F0F4FA; border-radius: 8px; padding: 14px; margin-bottom: 12px; font-size: 14px; line-height: 2.4; }
+  .fill-reveal-btn { background: var(--navy); color: white; border: none; border-radius: 6px; padding: 8px 18px; font-size: 13px; cursor: pointer; font-family: inherit; margin-top: 8px; }
+  .fill-reveal-btn:hover { background: #2D4070; }
+
+  .result-area { display: none; background: var(--navy); color: white; border-radius: 10px; padding: 24px; text-align: center; margin-top: 20px; }
+  .result-area.show { display: block; }
+  .result-score { font-size: 40px; font-weight: bold; color: var(--gold); margin: 10px 0; }
+  .result-msg { font-size: 16px; margin-bottom: 16px; }
+  .restart-btn { background: var(--crimson); color: white; border: none; border-radius: 8px; padding: 12px 30px; font-size: 15px; cursor: pointer; font-family: inherit; }
+
+  .footer { background: var(--navy); color: #8FA8CC; text-align: center; padding: 14px; font-size: 12px; margin-top: 30px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-label">GAMBA 憲法 ▶ 第23章 演習</div>
+  <div class="header-title">内 <span>閣</span></div>
+</div>
+
+<div class="score-bar">
+  <span>全12問</span>
+  <span class="score-display" id="scoreDisplay">0 / 0</span>
+  <span id="progressText">0%</span>
+</div>
+
+<div class="container">
+
+  <!-- Q1 -->
+  <div class="q-card" id="q1">
+    <div class="q-header"><span class="q-num">Q1</span><span class="q-tag">内閣の組織 ○×</span></div>
+    <div class="q-body">
+      <div class="q-text">内閣総理大臣は文民でなければならないが、その他の国務大臣については文民である必要はなく、現役の自衛官を国務大臣に任命することも憲法上許される。</div>
+      <div class="ox-buttons">
+        <button class="ox-btn" onclick="answerOX('q1',false,this)">○</button>
+        <button class="ox-btn" onclick="answerOX('q1',true,this)">×</button>
+      </div>
+      <div class="explanation" id="exp-q1">
+        <div class="exp-label">✗ 誤り</div>
+        憲法66条2項は「内閣総理大臣<span class="kw">その他の国務大臣</span>は、文民でなければならない」と規定しており、<span class="kw">全員が文民要件</span>を満たす必要がある。内閣総理大臣のみに限られない。
+      </div>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-card" id="q2">
+    <div class="q-header"><span class="q-num">Q2</span><span class="q-tag">内閣の組織 ○×</span></div>
+    <div class="q-body">
+      <div class="q-text">国務大臣の過半数は国会議員でなければならないが、国会議員である国務大臣が辞職してその過半数を割った場合、内閣は直ちに総辞職しなければならない。</div>
+      <div class="ox-buttons">
+        <button class="ox-btn" onclick="answerOX('q2',false,this)">○</button>
+        <button class="ox-btn" onclick="answerOX('q2',true,this)">×</button>
+      </div>
+      <div class="explanation" id="exp-q2">
+        <div class="exp-label">✗ 誤り</div>
+        過半数を割っても、内閣総理大臣が速やかに新たな国会議員を任命するか民間人国務大臣を罷免することで補充すれば足り、<span class="kw">直ちに総辞職する必要はない</span>。内閣の行為能力は失われない。
+      </div>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-card" id="q3">
+    <div class="q-header"><span class="q-num">Q3</span><span class="q-tag">内閣総理大臣の権能 ○×</span></div>
+    <div class="q-body">
+      <div class="q-text">内閣総理大臣が国務大臣を罷免するには、内閣の一体性を保つために閣議にかけてこれを決定する必要がある。</div>
+      <div class="ox-buttons">
+        <button class="ox-btn" onclick="answerOX('q3',false,this)">○</button>
+        <button class="ox-btn" onclick="answerOX('q3',true,this)">×</button>
+      </div>
+      <div class="explanation" id="exp-q3">
+        <div class="exp-label">✗ 誤り</div>
+        国務大臣の罷免は内閣総理大臣の<span class="kw">専権事項</span>であり（68条2項）、<span class="kw">閣議決定は不要</span>。ただし天皇による<span class="kw">認証は必要</span>（7条5号）。
+      </div>
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-card" id="q4">
+    <div class="q-header"><span class="q-num">Q4</span><span class="q-tag">内閣総理大臣の権能 ○×</span></div>
+    <div class="q-body">
+      <div class="q-text">内閣総理大臣は、閣議にかけて決定した方針が存在しなくても、内閣の明示の意思に反しない限り、行政各部に対し指導・助言等の指示を与えることができる（ロッキード事件・最大判平7・2・22）。</div>
+      <div class="ox-buttons">
+        <button class="ox-btn" onclick="answerOX('q4',true,this)">○</button>
+        <button class="ox-btn" onclick="answerOX('q4',false,this)">×</button>
+      </div>
+      <div class="explanation" id="exp-q4">
+        <div class="exp-label">✓ 正しい</div>
+        ロッキード事件（最大判平7・2・22）の判示通り。これは<span class="kw">指導・助言の指示権限（弱い権限）</span>であり、閣議決定を経て行使する<span class="kw">指揮監督権（強い権限）</span>とは区別される。
+      </div>
+    </div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-card" id="q5">
+    <div class="q-header"><span class="q-num">Q5</span><span class="q-tag">内閣総理大臣の権能 ○×</span></div>
+    <div class="q-body">
+      <div class="q-text">国務大臣は在任中、内閣総理大臣の同意がなければ訴追されないが、この間も訴追の理由となった犯罪に対する公訴時効は進行し続ける。</div>
+      <div class="ox-buttons">
+        <button class="ox-btn" onclick="answerOX('q5',false,this)">○</button>
+        <button class="ox-btn" onclick="answerOX('q5',true,this)">×</button>
+      </div>
+      <div class="explanation" id="exp-q5">
+        <div class="exp-label">✗ 誤り</div>
+        75条ただし書は「訴追の権利は、害されない」と規定しており、これにより訴追できない間は<span class="kw">公訴時効が停止</span>する。進行し続けるとすると国務大臣を不当に有利にする結果となるため。
+      </div>
+    </div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-card" id="q6">
+    <div class="q-header"><span class="q-num">Q6</span><span class="q-tag">内閣の権能 ○×</span></div>
+    <div class="q-body">
+      <div class="q-text">内閣は、ある法律が憲法に違反すると判断した場合には、その執行を拒否することができる。</div>
+      <div class="ox-buttons">
+        <button class="ox-btn" onclick="answerOX('q6',false,this)">○</button>
+        <button class="ox-btn" onclick="answerOX('q6',true,this)">×</button>
+      </div>
+      <div class="explanation" id="exp-q6">
+        <div class="exp-label">✗ 誤り</div>
+        内閣は法律を「<span class="kw">誠実に執行</span>」する義務を負う（73条1号）。<span class="kw">違憲審査権は裁判所</span>に専属するため、内閣が独自に違憲と判断して執行を拒否することはできない。
+      </div>
+    </div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-card" id="q7">
+    <div class="q-header"><span class="q-num">Q7</span><span class="q-tag">内閣の権能 ○×</span></div>
+    <div class="q-body">
+      <div class="q-text">内閣は、憲法及び法律の規定を実施するために政令を制定することができるが、政令には特にその法律の委任がある場合を除いては罰則を設けることができない（73条6号ただし書）。</div>
+      <div class="ox-buttons">
+        <button class="ox-btn" onclick="answerOX('q7',true,this)">○</button>
+        <button class="ox-btn" onclick="answerOX('q7',false,this)">×</button>
+      </div>
+      <div class="explanation" id="exp-q7">
+        <div class="exp-label">✓ 正しい</div>
+        73条6号ただし書の規定通り。また、通説は政令で<span class="kw">憲法の規定を直接実施すること（憲法直接実施政令）は認められない</span>としている。「憲法及び法律の規定を実施するため」の「及び法律」は一体として読むべきとするのが通説。
+      </div>
+    </div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-card" id="q8">
+    <div class="q-header"><span class="q-num">Q8</span><span class="q-tag">内閣の総辞職 ○×</span></div>
+    <div class="q-body">
+      <div class="q-text">内閣総理大臣が病気により長期入院し職務を執行できなくなった場合、内閣総理大臣が「欠けた」に当たるとして、内閣は総辞職しなければならない。</div>
+      <div class="ox-buttons">
+        <button class="ox-btn" onclick="answerOX('q8',false,this)">○</button>
+        <button class="ox-btn" onclick="answerOX('q8',true,this)">×</button>
+      </div>
+      <div class="explanation" id="exp-q8">
+        <div class="exp-label">✗ 誤り</div>
+        70条の「欠けた」とは死亡・辞職等により恒常的にいない状態をいう。<span class="kw">病気や生死不明</span>の場合は「欠けた」に当たらない。この場合はあらかじめ指定された国務大臣（<span class="kw">臨時代理</span>）が職務を代行する（内閣法9条）。
+      </div>
+    </div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="q-card" id="q9">
+    <div class="q-header"><span class="q-num">Q9</span><span class="q-tag">内閣の総辞職 ○×</span></div>
+    <div class="q-body">
+      <div class="q-text">参議院議員通常選挙後に初めて国会の召集があったときは、内閣は総辞職しなければならない。</div>
+      <div class="ox-buttons">
+        <button class="ox-btn" onclick="answerOX('q9',false,this)">○</button>
+        <button class="ox-btn" onclick="answerOX('q9',true,this)">×</button>
+      </div>
+      <div class="explanation" id="exp-q9">
+        <div class="exp-label">✗ 誤り</div>
+        70条が定める義務的総辞職は「<span class="kw">衆議院議員総選挙</span>の後に初めて国会の召集があったとき」。<span class="kw">参議院議員通常選挙</span>後は総辞職義務なし。衆議院のみが内閣に対する民主的信任の根拠となるため。
+      </div>
+    </div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="q-card" id="q10">
+    <div class="q-header"><span class="q-num">Q10</span><span class="q-tag">衆議院の解散 ○×</span></div>
+    <div class="q-body">
+      <div class="q-text">衆議院の解散については、憲法69条（不信任決議）の場合に限り許容されるとする説（69条限定説）が通説であり、判例もこの立場をとっている。</div>
+      <div class="ox-buttons">
+        <button class="ox-btn" onclick="answerOX('q10',false,this)">○</button>
+        <button class="ox-btn" onclick="answerOX('q10',true,this)">×</button>
+      </div>
+      <div class="explanation" id="exp-q10">
+        <div class="exp-label">✗ 誤り</div>
+        通説・判例は<span class="kw">非限定説</span>（69条の場合に限られず解散できる）をとる。苫米地事件（最大判昭35・6・8）は、衆議院の解散は<span class="kw">統治行為</span>として司法審査の対象外とした（69条限定説か否かについては判断を示していない）。
+      </div>
+    </div>
+  </div>
+
+  <!-- Q11 選択 -->
+  <div class="q-card" id="q11">
+    <div class="q-header"><span class="q-num">Q11</span><span class="q-tag">総合 選択</span></div>
+    <div class="q-body">
+      <div class="q-text">内閣および内閣総理大臣に関する次の記述のうち、最も妥当なものはどれか。</div>
+      <div class="choices">
+        <button class="choice-btn" onclick="answerChoice('q11',false,this)">① 内閣総理大臣は、衆議院議員の中から国会の議決で指名されるため、参議院議員が内閣総理大臣に指名されることはない。</button>
+        <button class="choice-btn" onclick="answerChoice('q11',false,this)">② 内閣が行政権の行使について国会に対し連帯して責任を負うことから、個別の国務大臣の単独責任を追及することはできない。</button>
+        <button class="choice-btn" onclick="answerChoice('q11',true,this)">③ 内閣総理大臣は、内閣を代表して議案を国会に提出することができ、この議案には法律案および予算案が含まれる。</button>
+        <button class="choice-btn" onclick="answerChoice('q11',false,this)">④ 内閣総理大臣の臨時代理は、内閣総理大臣の専権事項である国務大臣の任免権を行使することができる。</button>
+        <button class="choice-btn" onclick="answerChoice('q11',false,this)">⑤ 閣議の定足数および表決数は、内閣法に明文の定めがあり、全会一致の原則が法律上規定されている。</button>
+      </div>
+      <div class="explanation" id="exp-q11">
+        <div class="exp-label">✓ ③が正しい</div>
+        ①誤：内閣総理大臣は「<span class="kw">国会議員</span>」の中から指名（67条1項）。衆院議員に限らない。<br>
+        ②誤：連帯責任は個別の国務大臣の<span class="kw">単独責任を否定しない</span>。問責決議も可能。<br>
+        ③正：72条・内閣法5条の規定通り。法律案・予算案を含む。<br>
+        ④誤：国務大臣の任免権は内閣総理大臣の一身専属的権限。<span class="kw">臨時代理は行使できない</span>（通説）。<br>
+        ⑤誤：閣議の定足数・表決数は憲法・法律に<span class="kw">明文規定なし</span>。全会一致は慣例。
+      </div>
+    </div>
+  </div>
+
+  <!-- Q12 穴埋め -->
+  <div class="q-card" id="q12">
+    <div class="q-header"><span class="q-num">Q12</span><span class="q-tag">総合 穴埋め</span></div>
+    <div class="q-body">
+      <div class="q-text">次の文の空欄を埋めなさい（クリックで表示）。</div>
+      <div class="fill-area">
+        内閣が必ず総辞職しなければならない場面は3つある。①衆議院で
+        <span class="blank" onclick="revealBlank(this)" data-ans="不信任決議が可決">　　　　　　</span>
+        され、10日以内に衆議院を解散しない場合。②内閣総理大臣が
+        <span class="blank" onclick="revealBlank(this)" data-ans="欠けた">　　</span>
+        とき（病気・生死不明は含まれない）。③
+        <span class="blank" onclick="revealBlank(this)" data-ans="衆議院議員総選挙">　　　　　　</span>
+        の後に初めて国会の召集があったとき（参議院議員通常選挙後は不要）。<br><br>
+        衆議院の解散の実質的決定権は
+        <span class="blank" onclick="revealBlank(this)" data-ans="内閣">　　</span>
+        にあるとするのが通説（
+        <span class="blank" onclick="revealBlank(this)" data-ans="7条3号説">　　　　</span>
+        ）。苫米地事件で最高裁は衆院の解散を
+        <span class="blank" onclick="revealBlank(this)" data-ans="統治行為">　　　</span>
+        として司法審査の対象外とした。
+      </div>
+      <button class="fill-reveal-btn" onclick="revealAll('q12')">全て表示</button>
+    </div>
+  </div>
+
+  <!-- 結果 -->
+  <div class="result-area" id="resultArea">
+    <div style="font-size:14px; color:#8FA8CC;">演習完了！</div>
+    <div class="result-score" id="resultScore">--</div>
+    <div class="result-msg" id="resultMsg">--</div>
+    <button class="restart-btn" onclick="restart()">もう一度挑戦</button>
+  </div>
+
+</div>
+
+<div class="footer">GAMBA憲法 第23章 演習 内閣 ｜ 江原予備校</div>
+
+<script>
+  var answered = 0, correct = 0;
+  var total = 11;
+
+  function updateScore() {
+    document.getElementById('scoreDisplay').textContent = correct + ' / ' + answered;
+    var pct = Math.round(answered / total * 100);
+    document.getElementById('progressText').textContent = pct + '%';
+    if (answered >= total) showResult();
+  }
+
+  function answerOX(qid, isCorrect, btn) {
+    var card = document.getElementById(qid);
+    var btns = card.querySelectorAll('.ox-btn');
+    btns.forEach(function(b){ b.disabled = true; });
+    var exp = document.getElementById('exp-' + qid);
+    if (isCorrect) {
+      btn.classList.add('correct');
+      exp.classList.add('exp-correct');
+      correct++;
+    } else {
+      btn.classList.add('wrong');
+      exp.classList.add('exp-wrong');
+      btns.forEach(function(b){ if (b !== btn) b.classList.add('correct'); });
+    }
+    exp.classList.add('show');
+    answered++;
+    updateScore();
+  }
+
+  function answerChoice(qid, isCorrect, btn) {
+    var card = document.getElementById(qid);
+    var btns = card.querySelectorAll('.choice-btn');
+    btns.forEach(function(b){ b.disabled = true; });
+    var exp = document.getElementById('exp-' + qid);
+    if (isCorrect) {
+      btn.classList.add('correct');
+      exp.classList.add('exp-correct');
+      correct++;
+    } else {
+      btn.classList.add('wrong');
+      exp.classList.add('exp-wrong');
+      btns.forEach(function(b){
+        if (b.getAttribute('onclick').includes('true')) b.classList.add('show-answer');
+      });
+    }
+    exp.classList.add('show');
+    answered++;
+    updateScore();
+  }
+
+  function revealBlank(el) {
+    el.textContent = el.dataset.ans;
+    el.classList.add('revealed');
+  }
+
+  function revealAll(qid) {
+    document.getElementById(qid).querySelectorAll('.blank').forEach(function(b){
+      b.textContent = b.dataset.ans;
+      b.classList.add('revealed');
+    });
+  }
+
+  function showResult() {
+    var ra = document.getElementById('resultArea');
+    ra.classList.add('show');
+    document.getElementById('resultScore').textContent = correct + ' / ' + total + '点';
+    var pct = Math.round(correct / total * 100);
+    var msg = pct >= 90 ? '🎉 優秀！完璧に近い理解です！' :
+              pct >= 70 ? '👍 よくできています！復習でさらに完璧に。' :
+              pct >= 50 ? '📚 もう一度解説を確認しましょう。' :
+                          '📖 解説をじっくり読み直して再挑戦！';
+    document.getElementById('resultMsg').textContent = pct + '%正解　' + msg;
+  }
+
+  function restart() { location.reload(); }
+</script>
+</body>
+</html>
